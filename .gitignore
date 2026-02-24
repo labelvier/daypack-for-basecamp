@@ -1,9 +1,18 @@
+# macOS
 .DS_Store
-*.zip
+
+# Build artifacts
 build/
-build_for_safari/
-dist/
+
+# Temporary files
+*.zip
 kanban_snapshot.txt
 .backup/
+
+# IDE
+.idea/
+.vscode/
+
+# Xcode
 *.xcuserstate
 xcuserdata/

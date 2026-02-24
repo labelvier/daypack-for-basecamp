@@ -19,7 +19,12 @@ basecamp_kanban/
 │   └── Backpack by Label Vier/
 │       └── Backpack by Label Vier Extension/
 │           └── Resources/  # Symlinked to ../../../../shared/
-└── build_for_safari/ # Safari build output
+├── build/            # Build artifacts (git-ignored)
+│   ├── chrome/       # Chrome .zip packages
+│   ├── safari/       # Safari .app and .xcarchive
+│   └── README.md     # Build instructions
+├── .gitignore        # Ignores build/, *.zip, .DS_Store, etc.
+└── AGENTS.md         # This file
 ```
 
 ## File Synchronization Strategy
@@ -57,17 +62,38 @@ If symlinks don't work on your platform, you can manually copy files from `/shar
 ## Build & Development Commands
 
 ### Chrome Extension
-- **Load for development**: Open `chrome://extensions`, enable Developer Mode, click "Load unpacked", select the `chrome/` directory
-- **Test**: Manually test on https://3.basecamp.com/*/buckets/*/card_tables/*
-- **Package**: Zip the `chrome/` directory for Chrome Web Store submission
-- **Note**: With symlinks, Chrome will read directly from `/shared/`
+
+**Development:**
+- **Load**: Open `chrome://extensions`, enable Developer Mode, click "Load unpacked", select the `chrome/` directory
+- **Test**: Navigate to https://3.basecamp.com/*/buckets/*/card_tables/*
+- **Reload**: Click reload button in `chrome://extensions` after making changes
+- **Note**: With symlinks, Chrome reads directly from `/shared/`
+
+**Package for Distribution:**
+```bash
+cd chrome
+zip -r ../build/chrome/backpack-by-label-vier-v1.0.0.zip . -x "*.DS_Store" -x "__MACOSX"
+```
+Upload `build/chrome/backpack-by-label-vier-v1.0.0.zip` to Chrome Web Store.
 
 ### Safari Extension
-- **Build**: Open `safari/Backpack by Label Vier/Backpack by Label Vier.xcodeproj` in Xcode
+
+**Development:**
+- **Open**: `safari/Backpack by Label Vier/Backpack by Label Vier.xcodeproj` in Xcode
 - **Run**: Build and run from Xcode (⌘R)
-- **Archive**: Product → Archive in Xcode
 - **Test**: Enable unsigned extensions in Safari → Develop menu
 - **Note**: Xcode follows symlinks during build
+
+**Package for Distribution:**
+1. Product → Archive in Xcode
+2. Archives stored in `~/Library/Developer/Xcode/Archives/`
+3. Export .app to `build/safari/` for App Store submission
+
+### Build Artifacts
+
+All build artifacts are stored in `build/` directory (git-ignored):
+- `build/chrome/` - Chrome extension .zip packages
+- `build/safari/` - Safari extension .app and .xcarchive files
 
 ### No Build System
 This project has **no build step** - it uses vanilla JavaScript and CSS. Changes to `shared/content.js` or `shared/content.css` are immediately reflected after reloading the extension.
