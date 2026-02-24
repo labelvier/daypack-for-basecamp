@@ -1,0 +1,9 @@
+.DS_Store
+*.zip
+build/
+build_for_safari/
+dist/
+kanban_snapshot.txt
+.backup/
+*.xcuserstate
+xcuserdata/

@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		415018782F3CB4450090DCED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415018772F3CB4450090DCED /* AppDelegate.swift */; };
+		4150187C2F3CB4450090DCED /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 4150187A2F3CB4450090DCED /* Main.html */; };
+		4150187E2F3CB4450090DCED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4150187D2F3CB4450090DCED /* Icon.png */; };
+		415018802F3CB4450090DCED /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 4150187F2F3CB4450090DCED /* Style.css */; };
+		415018822F3CB4450090DCED /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 415018812F3CB4450090DCED /* Script.js */; };
+		415018842F3CB4450090DCED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415018832F3CB4450090DCED /* ViewController.swift */; };
+		415018872F3CB4450090DCED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415018852F3CB4450090DCED /* Main.storyboard */; };
+		415018892F3CB4460090DCED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 415018882F3CB4460090DCED /* Assets.xcassets */; };
+		415018902F3CB4460090DCED /* Backpack by Label Vier Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4150188F2F3CB4460090DCED /* Backpack by Label Vier Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		415018952F3CB4460090DCED /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415018942F3CB4460090DCED /* SafariWebExtensionHandler.swift */; };
+		415018A52F3CB4470090DCED /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = 415018A12F3CB4470090DCED /* content.css */; };
+		415018A62F3CB4470090DCED /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 415018A22F3CB4470090DCED /* icons */; };
+		415018A72F3CB4470090DCED /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 415018A32F3CB4470090DCED /* manifest.json */; };
+		415018A82F3CB4470090DCED /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 415018A42F3CB4470090DCED /* content.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		415018912F3CB4460090DCED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4150186C2F3CB4450090DCED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4150188E2F3CB4460090DCED;
+			remoteInfo = "Backpack by Label Vier Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4150189C2F3CB4460090DCED /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				415018902F3CB4460090DCED /* Backpack by Label Vier Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		415018742F3CB4450090DCED /* Backpack by Label Vier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backpack by Label Vier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		415018772F3CB4450090DCED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4150187B2F3CB4450090DCED /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		4150187D2F3CB4450090DCED /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		4150187F2F3CB4450090DCED /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		415018812F3CB4450090DCED /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		415018832F3CB4450090DCED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		415018862F3CB4450090DCED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		415018882F3CB4460090DCED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4150188A2F3CB4460090DCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4150188F2F3CB4460090DCED /* Backpack by Label Vier Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Backpack by Label Vier Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		415018942F3CB4460090DCED /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		415018962F3CB4460090DCED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		415018A12F3CB4470090DCED /* content.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content.css; path = Resources/content.css; sourceTree = "<group>"; };
+		415018A22F3CB4470090DCED /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = Resources/icons; sourceTree = "<group>"; };
+		415018A32F3CB4470090DCED /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+		415018A42F3CB4470090DCED /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = Resources/content.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		415018712F3CB4450090DCED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4150188C2F3CB4460090DCED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4150186B2F3CB4450090DCED = {
+			isa = PBXGroup;
+			children = (
+				415018762F3CB4450090DCED /* Backpack by Label Vier */,
+				415018932F3CB4460090DCED /* Backpack by Label Vier Extension */,
+				415018752F3CB4450090DCED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		415018752F3CB4450090DCED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				415018742F3CB4450090DCED /* Backpack by Label Vier.app */,
+				4150188F2F3CB4460090DCED /* Backpack by Label Vier Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		415018762F3CB4450090DCED /* Backpack by Label Vier */ = {
+			isa = PBXGroup;
+			children = (
+				415018772F3CB4450090DCED /* AppDelegate.swift */,
+				415018832F3CB4450090DCED /* ViewController.swift */,
+				415018852F3CB4450090DCED /* Main.storyboard */,
+				415018882F3CB4460090DCED /* Assets.xcassets */,
+				4150188A2F3CB4460090DCED /* Info.plist */,
+				415018792F3CB4450090DCED /* Resources */,
+			);
+			path = "Backpack by Label Vier";
+			sourceTree = "<group>";
+		};
+		415018792F3CB4450090DCED /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4150187A2F3CB4450090DCED /* Main.html */,
+				4150187D2F3CB4450090DCED /* Icon.png */,
+				4150187F2F3CB4450090DCED /* Style.css */,
+				415018812F3CB4450090DCED /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		415018932F3CB4460090DCED /* Backpack by Label Vier Extension */ = {
+			isa = PBXGroup;
+			children = (
+				415018A02F3CB4470090DCED /* Resources */,
+				415018942F3CB4460090DCED /* SafariWebExtensionHandler.swift */,
+				415018962F3CB4460090DCED /* Info.plist */,
+			);
+			path = "Backpack by Label Vier Extension";
+			sourceTree = "<group>";
+		};
+		415018A02F3CB4470090DCED /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				415018A12F3CB4470090DCED /* content.css */,
+				415018A22F3CB4470090DCED /* icons */,
+				415018A32F3CB4470090DCED /* manifest.json */,
+				415018A42F3CB4470090DCED /* content.js */,
+			);
+			name = Resources;
+			path = "Backpack by Label Vier Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		415018732F3CB4450090DCED /* Backpack by Label Vier */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4150189D2F3CB4460090DCED /* Build configuration list for PBXNativeTarget "Backpack by Label Vier" */;
+			buildPhases = (
+				415018702F3CB4450090DCED /* Sources */,
+				415018712F3CB4450090DCED /* Frameworks */,
+				415018722F3CB4450090DCED /* Resources */,
+				4150189C2F3CB4460090DCED /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				415018922F3CB4460090DCED /* PBXTargetDependency */,
+			);
+			name = "Backpack by Label Vier";
+			packageProductDependencies = (
+			);
+			productName = "Backpack by Label Vier";
+			productReference = 415018742F3CB4450090DCED /* Backpack by Label Vier.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4150188E2F3CB4460090DCED /* Backpack by Label Vier Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 415018992F3CB4460090DCED /* Build configuration list for PBXNativeTarget "Backpack by Label Vier Extension" */;
+			buildPhases = (
+				4150188B2F3CB4460090DCED /* Sources */,
+				4150188C2F3CB4460090DCED /* Frameworks */,
+				4150188D2F3CB4460090DCED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Backpack by Label Vier Extension";
+			packageProductDependencies = (
+			);
+			productName = "Backpack by Label Vier Extension";
+			productReference = 4150188F2F3CB4460090DCED /* Backpack by Label Vier Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4150186C2F3CB4450090DCED /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					415018732F3CB4450090DCED = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					4150188E2F3CB4460090DCED = {
+						CreatedOnToolsVersion = 26.2;
+					};
+				};
+			};
+			buildConfigurationList = 4150186F2F3CB4450090DCED /* Build configuration list for PBXProject "Backpack by Label Vier" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4150186B2F3CB4450090DCED;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 415018752F3CB4450090DCED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				415018732F3CB4450090DCED /* Backpack by Label Vier */,
+				4150188E2F3CB4460090DCED /* Backpack by Label Vier Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		415018722F3CB4450090DCED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4150187E2F3CB4450090DCED /* Icon.png in Resources */,
+				415018872F3CB4450090DCED /* Main.storyboard in Resources */,
+				415018822F3CB4450090DCED /* Script.js in Resources */,
+				4150187C2F3CB4450090DCED /* Main.html in Resources */,
+				415018892F3CB4460090DCED /* Assets.xcassets in Resources */,
+				415018802F3CB4450090DCED /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4150188D2F3CB4460090DCED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				415018A82F3CB4470090DCED /* content.js in Resources */,
+				415018A52F3CB4470090DCED /* content.css in Resources */,
+				415018A72F3CB4470090DCED /* manifest.json in Resources */,
+				415018A62F3CB4470090DCED /* icons in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		415018702F3CB4450090DCED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				415018842F3CB4450090DCED /* ViewController.swift in Sources */,
+				415018782F3CB4450090DCED /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4150188B2F3CB4460090DCED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				415018952F3CB4460090DCED /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		415018922F3CB4460090DCED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4150188E2F3CB4460090DCED /* Backpack by Label Vier Extension */;
+			targetProxy = 415018912F3CB4460090DCED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4150187A2F3CB4450090DCED /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4150187B2F3CB4450090DCED /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		415018852F3CB4450090DCED /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				415018862F3CB4450090DCED /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		415018972F3CB4460090DCED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		415018982F3CB4460090DCED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		4150189A2F3CB4460090DCED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4D9X5SHE99;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Backpack by Label Vier Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Backpack by Label Vier";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.labelvier.backpack.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4150189B2F3CB4460090DCED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4D9X5SHE99;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Backpack by Label Vier Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Backpack by Label Vier";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.labelvier.backpack.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4150189E2F3CB4460090DCED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4D9X5SHE99;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Backpack by Label Vier/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Backpack by Label Vier";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.labelvier.backpack;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4150189F2F3CB4460090DCED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4D9X5SHE99;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Backpack by Label Vier/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Backpack by Label Vier";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.labelvier.backpack;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4150186F2F3CB4450090DCED /* Build configuration list for PBXProject "Backpack by Label Vier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				415018972F3CB4460090DCED /* Debug */,
+				415018982F3CB4460090DCED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		415018992F3CB4460090DCED /* Build configuration list for PBXNativeTarget "Backpack by Label Vier Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4150189A2F3CB4460090DCED /* Debug */,
+				4150189B2F3CB4460090DCED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4150189D2F3CB4460090DCED /* Build configuration list for PBXNativeTarget "Backpack by Label Vier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4150189E2F3CB4460090DCED /* Debug */,
+				4150189F2F3CB4460090DCED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4150186C2F3CB4450090DCED /* Project object */;
+}
