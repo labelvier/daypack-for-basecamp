@@ -2,7 +2,12 @@
 .DS_Store
 
 # Build artifacts
-build/
+build/*
+!build/README.md
+!build/chrome/
+!build/safari/
+build/chrome/*
+build/safari/*
 
 # Temporary files
 *.zip
