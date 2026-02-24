@@ -14,29 +14,30 @@ basecamp_kanban/
 ├── chrome/           # Chrome extension wrapper
 │   ├── manifest.json
 │   ├── icons/
-│   └── shared/       # Currently duplicated, SHOULD BE symlink to ../shared
+│   └── shared/       # Duplicated files (can be symlinked locally)
 ├── safari/           # Safari extension (Xcode project)
 │   └── Backpack by Label Vier/
 │       └── Backpack by Label Vier Extension/
-│           └── Resources/  # Currently duplicated, SHOULD BE symlink
+│           └── Resources/  # Duplicated files (can be symlinked locally)
 └── build_for_safari/ # Safari build output
 ```
 
 ## File Synchronization Strategy
 
-### Current Problem
-Currently, `content.js` and `content.css` are **duplicated** across:
-- `/shared/` (source of truth)
-- `/chrome/shared/` (duplicate)
-- `/safari/.../Resources/` (duplicate, often outdated)
+### Current Setup: Manual Duplication
 
-This causes sync issues and version drift.
+The `content.js` and `content.css` files are currently **duplicated** across three locations:
+- `/shared/` → **SOURCE OF TRUTH** - always edit here
+- `/chrome/shared/` → copy for Chrome extension
+- `/safari/.../Resources/` → copy for Safari extension
 
-### Recommended Solution: Use Symlinks
+After editing in `/shared/`, you must manually copy to Chrome and Safari folders, OR use the symlink approach below.
 
-**IMPORTANT**: Always edit files in `/shared/` directory only. Use symlinks to share them with Chrome and Safari.
+### Recommended: Use Symlinks (Optional, Local Only)
 
-#### Setup Symlinks (run once):
+For easier development, you can replace the duplicated files with symlinks on your local machine. This is **not committed to git** (to keep the repository cross-platform compatible), but makes development much easier.
+
+#### Setup Symlinks (run once, locally):
 
 ```bash
 # Remove duplicated files in chrome/shared/
