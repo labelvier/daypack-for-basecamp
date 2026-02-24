@@ -14,63 +14,45 @@ basecamp_kanban/
 ├── chrome/           # Chrome extension wrapper
 │   ├── manifest.json
 │   ├── icons/
-│   └── shared/       # Duplicated files (can be symlinked locally)
+│   └── shared/       # Symlinked to ../../shared/
 ├── safari/           # Safari extension (Xcode project)
 │   └── Backpack by Label Vier/
 │       └── Backpack by Label Vier Extension/
-│           └── Resources/  # Duplicated files (can be symlinked locally)
+│           └── Resources/  # Symlinked to ../../../../shared/
 └── build_for_safari/ # Safari build output
 ```
 
 ## File Synchronization Strategy
 
-### Current Setup: Manual Duplication
+### ✅ Symlinks Are Active in Repository
 
-The `content.js` and `content.css` files are currently **duplicated** across three locations:
+The `content.js` and `content.css` files are **symlinked** from `/shared/` to both Chrome and Safari directories:
 - `/shared/` → **SOURCE OF TRUTH** - always edit here
-- `/chrome/shared/` → copy for Chrome extension
-- `/safari/.../Resources/` → copy for Safari extension
+- `/chrome/shared/` → symlinks to `../../shared/`
+- `/safari/.../Resources/` → symlinks to `../../../../shared/`
 
-After editing in `/shared/`, you must manually copy to Chrome and Safari folders, OR use the symlink approach below.
+**Benefits:**
+- ✅ Single source of truth prevents version drift
+- ✅ No manual copying needed
+- ✅ Changes in `/shared/` automatically reflected everywhere
+- ✅ Multiple developers can work simultaneously without sync issues
 
-### Recommended: Use Symlinks (Optional, Local Only)
+**IMPORTANT**: Always edit files **only** in `/shared/` directory. Never edit files in `chrome/shared/` or `safari/.../Resources/`.
 
-For easier development, you can replace the duplicated files with symlinks on your local machine. This is **not committed to git** (to keep the repository cross-platform compatible), but makes development much easier.
+### Verify Symlinks
 
-#### Setup Symlinks (run once, locally):
-
-```bash
-# Remove duplicated files in chrome/shared/
-rm /Users/mulder/Sites/opencode/basecamp_kanban/chrome/shared/content.js
-rm /Users/mulder/Sites/opencode/basecamp_kanban/chrome/shared/content.css
-
-# Create symlinks in chrome/shared/
-cd /Users/mulder/Sites/opencode/basecamp_kanban/chrome/shared
-ln -s ../../shared/content.js content.js
-ln -s ../../shared/content.css content.css
-
-# Remove duplicated files in Safari
-rm "/Users/mulder/Sites/opencode/basecamp_kanban/safari/Backpack by Label Vier/Backpack by Label Vier Extension/Resources/content.js"
-rm "/Users/mulder/Sites/opencode/basecamp_kanban/safari/Backpack by Label Vier/Backpack by Label Vier Extension/Resources/content.css"
-
-# Create symlinks in Safari Resources
-cd "/Users/mulder/Sites/opencode/basecamp_kanban/safari/Backpack by Label Vier/Backpack by Label Vier Extension/Resources"
-ln -s ../../../../shared/content.js content.js
-ln -s ../../../../shared/content.css content.css
-```
-
-#### Verify Symlinks:
+After cloning the repository, verify symlinks are working:
 ```bash
 ls -la chrome/shared/          # Should show content.js -> ../../shared/content.js
 ls -la safari/.../Resources/   # Should show content.js -> ../../../../shared/content.js
 ```
 
-### Development Workflow
+### Platform Compatibility
 
-1. **Edit only in `/shared/` directory**
-2. Symlinks automatically reflect changes in Chrome and Safari folders
-3. No manual copying needed
-4. No version drift
+**macOS/Linux**: Symlinks work natively with git.
+**Windows**: Requires git config `core.symlinks=true` (enabled by default on Windows 10+ with Developer Mode).
+
+If symlinks don't work on your platform, you can manually copy files from `/shared/` after pulling.
 
 ## Build & Development Commands
 
