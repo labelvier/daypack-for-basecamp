@@ -913,6 +913,7 @@
 
     const menu = document.createElement('div');
     menu.className = 'bkf-dropdown__menu';
+    menu.style.display = 'none'; // Ensure hidden before CSS loads (race condition guard)
     container.appendChild(menu);
 
     buildMenuItems(container, menu, options);
@@ -921,29 +922,40 @@
     const first = options[0];
     selectItem(container, first.value, first.label, first.avatarSrc || null, first.tagColor || null);
 
+    const openMenu = () => {
+      menu.style.display = 'block';
+      menu.classList.add('bkf-dropdown__menu--open');
+      container.classList.add('bkf-dropdown--open');
+    };
+
+    const closeMenu = () => {
+      menu.style.display = 'none';
+      menu.classList.remove('bkf-dropdown__menu--open');
+      container.classList.remove('bkf-dropdown--open');
+    };
+
     // Toggle menu
     selected.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = menu.classList.contains('bkf-dropdown__menu--open');
+      // Close all other open menus
       document.querySelectorAll('.bkf-dropdown__menu--open').forEach((m) => {
+        m.style.display = 'none';
         m.classList.remove('bkf-dropdown__menu--open');
         m.closest('.bkf-dropdown')?.classList.remove('bkf-dropdown--open');
       });
       if (!isOpen) {
-        menu.classList.add('bkf-dropdown__menu--open');
-        container.classList.add('bkf-dropdown--open');
+        openMenu();
       }
     });
 
     document.addEventListener('click', () => {
-      menu.classList.remove('bkf-dropdown__menu--open');
-      container.classList.remove('bkf-dropdown--open');
+      closeMenu();
     });
 
     container.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        menu.classList.remove('bkf-dropdown__menu--open');
-        container.classList.remove('bkf-dropdown--open');
+        closeMenu();
       }
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -985,6 +997,7 @@
       item.addEventListener('click', (e) => {
         e.stopPropagation();
         selectItem(container, value, label, avatarSrc || null, tc || null);
+        menu.style.display = 'none';
         menu.classList.remove('bkf-dropdown__menu--open');
         container.classList.remove('bkf-dropdown--open');
       });
@@ -1382,6 +1395,9 @@
   // Init
   // ──────────────────────────────────────────────
 
+  // Guard against multiple concurrent waitForCards loops (e.g. DOMContentLoaded + turbo:load)
+  let _boardInitPending = false;
+
   function init() {
     log('init() called');
 
@@ -1417,15 +1433,24 @@
       return;
     }
 
+    // Prevent multiple concurrent waitForCards polling loops
+    if (_boardInitPending) {
+      log('Board init already pending, skipping duplicate init');
+      return;
+    }
+    _boardInitPending = true;
+
     let retryCount = 0;
     const waitForCards = () => {
       const cards = document.querySelectorAll(CARD_WRAP_SELECTOR);
       log(`waitForCards attempt #${retryCount + 1}: found ${cards.length} card wraps`);
       if (cards.length > 0) {
+        _boardInitPending = false;
         injectFilterBar();
       } else {
         retryCount++;
         if (retryCount > 20) {
+          _boardInitPending = false;
           warn('Gave up waiting for cards after 20 attempts (10s)');
           return;
         }
@@ -1450,6 +1475,7 @@
 
   document.addEventListener('turbo:load', () => {
     log('turbo:load event fired');
+    _boardInitPending = false; // Reset on navigation so a fresh init can run
     init();
   });
   document.addEventListener('turbo:render', () => {
