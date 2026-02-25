@@ -8,10 +8,28 @@ Browser extension (Chrome + Safari) that adds filtering capabilities to Basecamp
 
 ```
 basecamp_kanban/
-├── shared/           # SOURCE OF TRUTH — edit only here
-│   ├── content.js    # Main content script (~1500 lines)
-│   └── content.css   # Extension styles
-├── scripts/          # Build tooling
+├── shared/                   # SOURCE OF TRUTH — edit only here
+│   ├── content.js            # Entry point — init(), Turbo events, page routing
+│   ├── content.css           # Extension styles
+│   ├── logger.js             # Shared [BKF] log/warn helpers
+│   ├── constants.js          # Shared DOM selectors and IDs
+│   ├── observers.js          # MutationObservers (cards, inline title edit)
+│   ├── utils/
+│   │   ├── colors.js         # Deterministic WCAG-safe tag color generation
+│   │   ├── tags.js           # TAG_REGEX, normalizeTag, extractTags, tagDisplayLabel
+│   │   ├── page.js           # isKanbanBoard, isCardDetailPage, etc.
+│   │   └── names.js          # parseAuthorName, matchAuthorToAssignee
+│   ├── data/
+│   │   ├── scan.js           # DOM scanning — scanPersons, scanTags, getCardTags, etc.
+│   │   └── persistence.js    # localStorage + URL hash filter & tag state
+│   ├── ui/
+│   │   ├── pills.js          # createTagPill, renderTagPills, renderDetailPageTags
+│   │   ├── dropdown.js       # createCustomDropdown, buildMenuItems, selectItem
+│   │   └── edit.js           # injectEditUI, tag picker, live highlight backdrop
+│   └── filters/
+│       ├── counts.js         # updateColumnCounts, updateShadowcards, isActivelyFiltering
+│       └── filterBar.js      # injectFilterBar, restoreFiltersFromHash, applyFilters
+├── scripts/                  # Build tooling
 │   ├── build.js      # Production + dev build (esbuild)
 │   ├── watch.js      # File watcher for development
 │   └── package-chrome.js  # Packages chrome/ as a .zip
@@ -52,7 +70,7 @@ npm run build
 npm run dev
 ```
 
-Watches `shared/content.js` and `shared/content.css`. On every save:
+Watches the entire `shared/` directory tree (all `.js` and `.css` files). On every save:
 1. Rebuilds (readable + inline sourcemaps) into `chrome/shared/` and `safari/.../Resources/`
 2. Prints a reminder to reload the extension in Chrome
 
@@ -114,14 +132,15 @@ Always run `npm install && npm run build` after pulling to regenerate the output
 - **Basecamp integration**: Targets Basecamp 4's DOM structure and Turbo events
 
 ### Code Organization
-- **Section headers**: Use ASCII art separators for major sections:
+- **Section headers**: Use ASCII art separators for major sections within a file:
   ```javascript
   // ──────────────────────────────────────────────
   // Section name
   // ──────────────────────────────────────────────
   ```
-- **Single file**: All logic in one `content.js` file
-- **Top-down flow**: Constants → utilities → core features → initialization
+- **Module files**: Logic is split across focused ES module files under `shared/` (see Project Structure above)
+- **Entry point**: `shared/content.js` imports from all modules and wires up init + Turbo events
+- **Dependency direction**: `content.js` → `filters/` → `ui/`, `data/` → `utils/` → (no imports)
 
 ### Naming Conventions
 - **Constants**: `SCREAMING_SNAKE_CASE` (e.g., `LOG_PREFIX`, `FILTER_BAR_ID`, `TAG_REGEX`)
@@ -160,7 +179,7 @@ Always run `npm install && npm run build` after pulling to regenerate the output
 ## Testing
 
 ### Manual Testing Workflow
-1. Edit `shared/content.js` or `shared/content.css`
+1. Edit any file under `shared/` (entry point, modules, or CSS)
 2. The watcher (`npm run dev`) rebuilds automatically
 3. Reload the extension in Chrome (`chrome://extensions` → ↺)
 4. Navigate to a Basecamp card table: `https://3.basecamp.com/*/buckets/*/card_tables/*`
@@ -178,10 +197,10 @@ Always run `npm install && npm run build` after pulling to regenerate the output
 
 AI agents with browser access can test changes without reloading the extension by injecting code directly via the console. Since `content.js` is minified in production builds, use `npm run build -- --dev` first for readable output.
 
-#### Inject JS (from `shared/content.js`)
+#### Inject JS (from the bundled `chrome/shared/content.js`)
 ```javascript
 // Run in browser console on a Basecamp card table page
-// (paste the contents of shared/content.js)
+// (paste the contents of chrome/shared/content.js — the esbuild output, not the source)
 ```
 
 #### Inject CSS
@@ -204,7 +223,7 @@ document.head.appendChild(s);
 ## Key Constraints
 
 - Vanilla JS only — no TypeScript, no framework
-- esbuild is only used to minify/copy; there is no bundling (the file is self-contained)
+- esbuild bundles all modules into one output IIFE (`bundle: true`, `format: 'iife'`)
 - Must not break Basecamp's native functionality
 - Must handle Turbo navigation (SPA-style page loads)
 - Must be visually consistent with Basecamp's design system

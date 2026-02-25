@@ -32,10 +32,11 @@ TARGETS.forEach(dir => fs.mkdirSync(dir, { recursive: true }));
 async function build() {
   console.log(`Building ${isDev ? '(dev — readable)' : '(production — minified)'}…`);
 
-  // --- JS via esbuild ---
+  // --- JS via esbuild (bundle: true to resolve imports across the shared/ modules) ---
   const jsResult = await esbuild.build({
     entryPoints: [SRC_JS],
-    bundle: false,        // No bundling — the file is self-contained
+    bundle: true,         // Bundle all import/export modules into one output file
+    format: 'iife',       // Wrap in an IIFE so no globals leak into the page
     minify: !isDev,
     sourcemap: isDev ? 'inline' : false,
     write: false,         // Capture output in memory

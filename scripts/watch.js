@@ -35,11 +35,17 @@ console.log('Press Ctrl+C to stop.\n');
 // Initial build
 rebuild();
 
+// Watch the entire shared/ directory tree (JS + CSS across all subdirectories)
 chokidar
-  .watch([path.join(sharedDir, 'content.js'), path.join(sharedDir, 'content.css')], {
+  .watch(sharedDir, {
     ignoreInitial: true,
+    ignored: /node_modules/,
   })
   .on('change', (filePath) => {
     console.log(`Changed: ${path.relative(root, filePath)}`);
+    rebuild();
+  })
+  .on('add', (filePath) => {
+    console.log(`Added: ${path.relative(root, filePath)}`);
     rebuild();
   });
