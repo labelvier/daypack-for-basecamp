@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Backpack by Label Vier",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "All your Basecamp tools, always at hand in your backpack. Filter kanban boards, manage tasks, and stay organized.",
   "content_scripts": [
     {
