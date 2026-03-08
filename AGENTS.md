@@ -1,5 +1,7 @@
 # Development Guidelines for Basecamp Kanban Filter
 
+> See [CHANGELOG.md](./CHANGELOG.md) for a history of notable changes.
+
 ## Project Overview
 
 Browser extension (Chrome + Safari) that adds filtering capabilities to Basecamp 4 card tables (kanban boards). The extension runs as a content script on Basecamp pages, adding assignee, author, and tag filters with visual tag pills.
@@ -122,6 +124,10 @@ Upload that file to the Chrome Web Store.
 ### After `git pull`
 
 Always run `npm install && npm run build` after pulling to regenerate the output files.
+
+## Always commit
+
+After implementing a change, commit both the source files in `shared/` but ignore generated files in `chrome/shared/` and `safari/.../Resources/`. This prevents merge conflicts and ensures the build output is always reproducible from the source.
 
 ## Code Style Guidelines
 
