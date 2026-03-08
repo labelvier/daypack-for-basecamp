@@ -231,6 +231,17 @@ article.kanban-card__wrap.bkf-hidden {
   color: rgb(70, 90, 105);
 }
 
+/* ── Tag pills inside the jump menu (Cmd+J) card results ── */
+[data-role="content_filter_aria_text"] .bkf-tag-pill {
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-right: 3px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
 /* ── Live highlight backdrop for title input ── */
 .bkf-input-wrap {
   position: relative;

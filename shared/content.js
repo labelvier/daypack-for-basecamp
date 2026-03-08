@@ -19,12 +19,17 @@ import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
 import { observeTitleH1 } from './observers.js';
+import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 
 // ──────────────────────────────────────────────
 // Init
 // ──────────────────────────────────────────────
 
 log('Content script loaded on:', window.location.href);
+
+// Start the jump menu observer immediately — it runs on every page so that
+// tag pills appear in Cmd+J results regardless of the current page context.
+initJumpMenuObserver();
 
 // Guard against multiple concurrent waitForCards loops (e.g. DOMContentLoaded + turbo:load)
 let _boardInitPending = false;
@@ -110,12 +115,18 @@ if (document.readyState === 'loading') {
 document.addEventListener('turbo:load', () => {
   log('turbo:load event fired');
   _boardInitPending = false; // Reset on navigation so a fresh init can run
+  // Re-init jump menu observer in case body was replaced by turbo:render
+  destroyJumpMenuObserver();
+  initJumpMenuObserver();
   init();
 });
 
 document.addEventListener('turbo:render', () => {
   log('turbo:render event fired');
   _boardInitPending = false; // Reset on render so a fresh init can run
+  // turbo:render replaces document.body — re-attach the observer to the new body
+  destroyJumpMenuObserver();
+  initJumpMenuObserver();
   init();
 });
 
