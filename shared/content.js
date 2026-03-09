@@ -20,6 +20,7 @@ import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
 import { observeTitleH1 } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
+import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
 
 // ──────────────────────────────────────────────
 // Init
@@ -61,6 +62,7 @@ function init() {
   // Column detail pages: render tag pills in card titles (same as board)
   if (isKanbanColumnPage()) {
     renderTagPills();
+    startNewCardObserver();
     return;
   }
 
@@ -83,6 +85,7 @@ function init() {
     if (cards.length > 0) {
       _boardInitPending = false;
       injectFilterBar();
+      startNewCardObserver();
     } else {
       retryCount++;
       if (retryCount > 20) {
@@ -117,6 +120,7 @@ document.addEventListener('turbo:load', () => {
   _boardInitPending = false; // Reset on navigation so a fresh init can run
   // Re-init jump menu observer in case body was replaced by turbo:render
   destroyJumpMenuObserver();
+  destroyNewCardObserver();
   initJumpMenuObserver();
   init();
 });
@@ -126,6 +130,7 @@ document.addEventListener('turbo:render', () => {
   _boardInitPending = false; // Reset on render so a fresh init can run
   // turbo:render replaces document.body — re-attach the observer to the new body
   destroyJumpMenuObserver();
+  destroyNewCardObserver();
   initJumpMenuObserver();
   init();
 });
