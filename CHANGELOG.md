@@ -4,6 +4,11 @@ All notable changes to Backpack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-03-09
+
+### Added
+- **Tag picker in new card form** — When adding a new card via the inline "Add a card" form in a lane, a tag picker strip is now injected below the title input. Users can select existing tags from the board; selected tags are automatically appended to the card title as `[tag]` syntax. The picker detects and deduplicates tags already present in the title, and cleans up when the form is submitted or cancelled. Uses a MutationObserver to detect the inline form on any Basecamp card table page.
+
 ## [0.1.0] — 2026-03-08
 
 ### Added
