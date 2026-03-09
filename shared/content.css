@@ -231,6 +231,51 @@ article.kanban-card__wrap.bkf-hidden {
   color: rgb(70, 90, 105);
 }
 
+/* ── New card inline form: tag picker strip ── */
+.bkf-new-card-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+  padding: 4px 0 2px;
+}
+
+.bkf-new-card-picker__label {
+  font-size: 11.5px;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: rgb(100, 116, 128);
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bkf-new-card-picker__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.bkf-new-card-picker__pill {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 4px;
+  line-height: 1.45;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: opacity 0.1s, transform 0.1s;
+}
+
+.bkf-new-card-picker__pill:hover {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
 /* ── Tag pills inside the jump menu (Cmd+J) card results ── */
 [data-role="content_filter_aria_text"] .bkf-tag-pill {
   font-size: 10.5px;
