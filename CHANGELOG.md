@@ -4,6 +4,11 @@ All notable changes to Backpack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-03-10
+
+### Added
+- **GitHub Actions release pipeline** — A CI/CD workflow (`.github/workflows/release.yml`) now automatically builds and uploads the Chrome extension zip as a release asset whenever a new GitHub release is published. No more manual packaging and uploading.
+
 ## [0.2.0] — 2026-03-09
 
 ### Added
