@@ -129,6 +129,24 @@ Always run `npm install && npm run build` after pulling to regenerate the output
 
 After implementing a change, commit both the source files in `shared/` but ignore generated files in `chrome/shared/` and `safari/.../Resources/`. This prevents merge conflicts and ensures the build output is always reproducible from the source.
 
+## Ask for updates for changelog
+
+When you make changes, ask if you need to update the [CHANGELOG.md](./CHANGELOG.md) with a brief description of the change, the version number, and the date. This helps keep track of what has been changed and when.
+
+## Releasing a new version
+
+When creating a release (minor or major), follow these steps:
+
+1. Bump the version in `package.json` and `chrome/manifest.json`
+2. Update `CHANGELOG.md` — move items from `[Unreleased]` into a new dated section
+3. Commit all changes with message: `chore: bump version to x.y.z`
+4. Push to `main`
+5. Create a GitHub release using the `gh` CLI:
+   ```bash
+   gh release create vx.y.z --title "vx.y.z" --notes "..." --latest
+   ```
+   Use the CHANGELOG entry for that version as the release notes.
+
 ## Code Style Guidelines
 
 ### Language & Approach

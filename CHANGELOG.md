@@ -4,6 +4,11 @@ All notable changes to Backpack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [0.2.2] — 2026-03-10
+
+### Changed
+- **New app icon** — Replaced the placeholder icon with the official Backpack icon across Chrome (16, 32, 48, 128px) and Safari (extension icons, AppIcon, LargeIcon). Icon uses a coral-red background (`#E2645E`) with a white backpack illustration.
+
 ## [0.2.1] — 2026-03-10
 
 ### Added
