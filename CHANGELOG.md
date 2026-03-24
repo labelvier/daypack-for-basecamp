@@ -4,6 +4,20 @@ All notable changes to Backpack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [1.0.1] — 2026-03-24
+
+### Fixed
+- **Safari version sync** — Bumped `MARKETING_VERSION` in the Xcode project and `version` in the Safari extension manifest from `0.1.0` / `1.0.0` to `1.0.1`, bringing them in line with `package.json` and the Chrome/Firefox manifests.
+
+## [1.0.0] — 2026-03-24
+
+### Added
+- **Firefox support** — Extension now builds and packages for Firefox (Manifest v3). Added `firefox/` wrapper with manifest, icons and store description. `npm run build` outputs to `firefox/shared/`; `npm run package:firefox` creates a zip ready for Firefox Add-ons (AMO).
+- **Firefox packaging script** — `scripts/package-firefox.js` mirrors the Chrome packaging workflow.
+
+### Changed
+- **Version bump to 1.0.0** — Marks the first stable, multi-browser release (Chrome, Firefox, Safari).
+
 ## [0.2.2] — 2026-03-10
 
 ### Changed
