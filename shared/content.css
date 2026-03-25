@@ -287,6 +287,24 @@ article.kanban-card__wrap.bkf-hidden {
   top: -1px;
 }
 
+/* ── Tag pills inside the Hey (notification) menu reading items ── */
+.bkf-hey-pill-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.bkf-hey-pill-row .bkf-tag-pill {
+  font-size: 10.5px;
+  padding: 0px 5px;
+  border-radius: 3px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
 /* ── Live highlight backdrop for title input ── */
 .bkf-input-wrap {
   position: relative;

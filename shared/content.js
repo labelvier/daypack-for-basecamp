@@ -14,12 +14,13 @@
 
 import { log } from './logger.js';
 import { CARD_WRAP_SELECTOR, EDIT_UI_ID } from './constants.js';
-import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage } from './utils/page.js';
+import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage, isReadingsPage } from './utils/page.js';
 import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
 import { observeTitleH1 } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
+import { initHeyMenuObserver, destroyHeyMenuObserver, processReadingsPage } from './ui/heyMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
 
 // ──────────────────────────────────────────────
@@ -31,6 +32,10 @@ log('Content script loaded on:', window.location.href);
 // Start the jump menu observer immediately — it runs on every page so that
 // tag pills appear in Cmd+J results regardless of the current page context.
 initJumpMenuObserver();
+
+// Start the Hey menu observer immediately — it runs on every page so that
+// tag pills appear in Hey (notification) menu reading items for kanban cards.
+initHeyMenuObserver();
 
 // Guard against multiple concurrent waitForCards loops (e.g. DOMContentLoaded + turbo:load)
 let _boardInitPending = false;
@@ -56,6 +61,12 @@ function init() {
   if (isCardDetailPage()) {
     renderDetailPageTags();
     observeTitleH1();
+    return;
+  }
+
+  // Readings page (/my/readings): render tag pills in kanban card reading items
+  if (isReadingsPage()) {
+    processReadingsPage();
     return;
   }
 
@@ -120,8 +131,10 @@ document.addEventListener('turbo:load', () => {
   _boardInitPending = false; // Reset on navigation so a fresh init can run
   // Re-init jump menu observer in case body was replaced by turbo:render
   destroyJumpMenuObserver();
+  destroyHeyMenuObserver();
   destroyNewCardObserver();
   initJumpMenuObserver();
+  initHeyMenuObserver();
   init();
 });
 
@@ -130,8 +143,10 @@ document.addEventListener('turbo:render', () => {
   _boardInitPending = false; // Reset on render so a fresh init can run
   // turbo:render replaces document.body — re-attach the observer to the new body
   destroyJumpMenuObserver();
+  destroyHeyMenuObserver();
   destroyNewCardObserver();
   initJumpMenuObserver();
+  initHeyMenuObserver();
   init();
 });
 

@@ -4,6 +4,10 @@ All notable changes to Backpack by Label Vier are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Tag pills in the Hey menu** — Kanban card reading items in the Hey (notification) menu now show tag pills extracted from `[tag]` syntax in the card title. Tags are replaced in-place, so prefixes like "Re: " and "Due today: " are preserved at the correct position.
+- **Tag pills on /my/readings page** — The same tag pill rendering applies to the full notifications page (`/my/readings`), including lazily-loaded items.
+
 ## [1.0.1] — 2026-03-24
 
 ### Fixed

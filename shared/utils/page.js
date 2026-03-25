@@ -36,3 +36,10 @@ export function isCardEditPage() {
   log('isCardEditPage?', result, '| pathname:', path);
   return result;
 }
+
+export function isReadingsPage() {
+  const path = window.location.pathname;
+  const result = /\/my\/readings$/.test(path);
+  log('isReadingsPage?', result, '| pathname:', path);
+  return result;
+}
