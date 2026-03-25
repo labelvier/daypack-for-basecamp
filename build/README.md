@@ -7,6 +7,7 @@ This directory contains all build artifacts and distribution packages.
 ```
 build/
 ├── chrome/          # Chrome extension builds (.zip packages)
+├── firefox/         # Firefox extension builds (.zip packages)
 ├── safari/          # Safari extension builds (.app, .xcarchive)
 └── README.md        # This file
 ```
@@ -15,14 +16,27 @@ build/
 
 To create a Chrome extension package:
 
-1. Make your changes in `/shared/`
-2. Test with Chrome extension loaded from `/chrome/` directory
-3. When ready to package:
-   ```bash
-   cd chrome
-   zip -r ../build/chrome/backpack-by-label-vier-v1.0.0.zip . -x "*.DS_Store" -x "__MACOSX"
-   ```
-4. Upload `build/chrome/backpack-by-label-vier-v1.0.0.zip` to Chrome Web Store
+```bash
+npm run package:chrome
+```
+
+This will:
+1. Run a production build
+2. Create `build/chrome/backpack-by-label-vier-v{version}.zip`
+3. Upload to Chrome Web Store
+
+## Firefox Builds
+
+To create a Firefox extension package:
+
+```bash
+npm run package:firefox
+```
+
+This will:
+1. Run a production build
+2. Create `build/firefox/backpack-by-label-vier-v{version}.zip`
+3. Upload to Firefox Add-ons (AMO)
 
 ## Safari Builds
 

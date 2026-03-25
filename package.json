@@ -1,13 +1,15 @@
 {
   "name": "backpack-by-label-vier",
   "version": "1.0.1",
-  "description": "Backpack by Label Vier — Basecamp kanban filter extension for Chrome and Safari",
+  "description": "Backpack by Label Vier — Basecamp kanban filter extension for Chrome, Firefox and Safari",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/watch.js",
-    "package:chrome": "node scripts/package-chrome.js"
+    "package:chrome": "node scripts/package-chrome.js",
+    "package:firefox": "node scripts/package-firefox.js"
   },
   "devDependencies": {
     "chokidar": "^4.0.3",

@@ -20,6 +20,7 @@ const isDev = process.argv.includes('--dev');
 
 const TARGETS = [
   path.join(root, 'chrome', 'shared'),
+  path.join(root, 'firefox', 'shared'),
   path.join(root, 'safari', 'Backpack by Label Vier', 'Backpack by Label Vier Extension', 'Resources'),
 ];
 
