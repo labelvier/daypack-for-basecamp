@@ -57,6 +57,12 @@ export function renderTagPills() {
     if (titleEl.dataset.bkfTags) return; // already processed
 
     const originalText = titleEl.textContent;
+
+    // If the title is empty, the card may still be loading (e.g. via Turbo Streams).
+    // Do NOT mark it as 'none' yet — the observer will re-trigger renderTagPills()
+    // once the content is filled in.
+    if (!originalText.trim()) return;
+
     const tags = extractTags(originalText);
     if (tags.length === 0) {
       titleEl.dataset.bkfTags = 'none';
