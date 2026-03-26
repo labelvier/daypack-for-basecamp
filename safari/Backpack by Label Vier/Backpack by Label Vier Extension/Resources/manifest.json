@@ -11,6 +11,14 @@
       "run_at": "document_idle"
     }
   ],
+  "action": {
+    "default_icon": {
+      "16": "icons/toolbar-icon-16.png",
+      "19": "icons/toolbar-icon-19.png",
+      "32": "icons/toolbar-icon-32.png",
+      "38": "icons/toolbar-icon-38.png"
+    }
+  },
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
