@@ -28,7 +28,6 @@ export function startCardObserver() {
 
   let debounce = null;
   cardObserver = new MutationObserver((mutations) => {
-    // Only care about mutations that add article.kanban-card__wrap nodes
     const relevant = mutations.some((m) =>
       Array.from(m.addedNodes).some(
         (n) => n.nodeType === 1 && (
@@ -36,9 +35,9 @@ export function startCardObserver() {
         )
       )
     );
+
     if (!relevant) return;
 
-    // Debounce: Turbo may add multiple cards in quick succession
     clearTimeout(debounce);
     debounce = setTimeout(() => {
       log('cardObserver: new cards detected, re-rendering pills and re-applying filters');

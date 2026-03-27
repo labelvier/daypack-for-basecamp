@@ -18,7 +18,7 @@ import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage } f
 import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
-import { observeTitleH1 } from './observers.js';
+import { observeTitleH1, startCardObserver } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
 
@@ -60,8 +60,10 @@ function init() {
   }
 
   // Column detail pages: render tag pills in card titles (same as board)
+  // Also start the card observer to handle lazy-loaded cards via infinite scroll.
   if (isKanbanColumnPage()) {
     renderTagPills();
+    startCardObserver();
     startNewCardObserver();
     return;
   }
