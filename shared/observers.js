@@ -19,10 +19,6 @@ let cardObserver = null;
 /**
  * Start watching the board container for added/removed card nodes.
  * Debounces re-render + re-filter at 50ms.
- *
- * Also watches for characterData / childList changes inside .kanban-card__title
- * elements, so that cards whose titles are filled in lazily (e.g. via Turbo Streams
- * after the initial board render) also get their tag pills rendered.
  */
 export function startCardObserver() {
   if (cardObserver) { cardObserver.disconnect(); cardObserver = null; }
@@ -32,46 +28,25 @@ export function startCardObserver() {
 
   let debounce = null;
   cardObserver = new MutationObserver((mutations) => {
-    // Care about:
-    // 1. Mutations that add article.kanban-card__wrap nodes (new cards)
-    // 2. Mutations inside .kanban-card__title nodes (lazy title content fill-in)
-    const relevant = mutations.some((m) => {
-      // New card nodes added
-      if (Array.from(m.addedNodes).some(
+    const relevant = mutations.some((m) =>
+      Array.from(m.addedNodes).some(
         (n) => n.nodeType === 1 && (
           n.matches?.(CARD_WRAP_SELECTOR) || n.querySelector?.(CARD_WRAP_SELECTOR)
         )
-      )) return true;
-
-      // Title content filled in (characterData or childList inside a title el)
-      const target = m.target;
-      if (
-        target &&
-        (target.classList?.contains('kanban-card__title') ||
-         target.closest?.('.kanban-card__title'))
-      ) {
-        // Only relevant if the title element hasn't been processed yet
-        const titleEl = target.classList?.contains('kanban-card__title')
-          ? target
-          : target.closest('.kanban-card__title');
-        if (titleEl && !titleEl.dataset.bkfTags) return true;
-      }
-
-      return false;
-    });
+      )
+    );
 
     if (!relevant) return;
 
-    // Debounce: Turbo may add multiple cards or text nodes in quick succession
     clearTimeout(debounce);
     debounce = setTimeout(() => {
-      log('cardObserver: card changes detected, re-rendering pills and re-applying filters');
+      log('cardObserver: new cards detected, re-rendering pills and re-applying filters');
       renderTagPills();
       if (isActivelyFiltering()) applyFilters();
     }, 50);
   });
 
-  cardObserver.observe(board, { childList: true, subtree: true, characterData: true });
+  cardObserver.observe(board, { childList: true, subtree: true });
   log('cardObserver started on', board.tagName, board.className.slice(0, 40));
 }
 
