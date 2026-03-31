@@ -4,7 +4,7 @@
  * Content script that adds assignee/author/tag filter dropdowns to Basecamp card tables.
  * Also renders tag pills on card detail pages, and adds a tag editor UI in edit mode.
  *
- * Works on: Basecamp card_tables board pages + card detail pages + card edit pages
+ * Works on: Basecamp card_tables board pages + individual column pages + card detail pages + card edit pages
  *
  * This file is the esbuild entry point. All feature logic lives in the modules under shared/.
  * esbuild bundles everything into a single IIFE output for Chrome and Safari.
@@ -15,10 +15,10 @@
 import { log } from './logger.js';
 import { CARD_WRAP_SELECTOR, EDIT_UI_ID } from './constants.js';
 import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage } from './utils/page.js';
-import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
+import { renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
-import { observeTitleH1, startCardObserver } from './observers.js';
+import { observeTitleH1 } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
 
@@ -59,47 +59,38 @@ function init() {
     return;
   }
 
-  // Column detail pages: render tag pills in card titles (same as board)
-  // Also start the card observer to handle lazy-loaded cards via infinite scroll.
-  if (isKanbanColumnPage()) {
-    renderTagPills();
-    startCardObserver();
-    startNewCardObserver();
-    return;
-  }
-
-  if (!isKanbanBoard()) {
-    log('Not a kanban board, card detail, or card edit page, aborting init');
-    return;
-  }
-
-  // Prevent multiple concurrent waitForCards polling loops
-  if (_boardInitPending) {
-    log('Board init already pending, skipping duplicate init');
-    return;
-  }
-  _boardInitPending = true;
-
-  let retryCount = 0;
-  const waitForCards = () => {
-    const cards = document.querySelectorAll(CARD_WRAP_SELECTOR);
-    log(`waitForCards attempt #${retryCount + 1}: found ${cards.length} card wraps`);
-    if (cards.length > 0) {
-      _boardInitPending = false;
-      injectFilterBar();
-      startNewCardObserver();
-    } else {
-      retryCount++;
-      if (retryCount > 20) {
-        _boardInitPending = false;
-        log('Gave up waiting for cards after 20 attempts (10s)');
-        return;
-      }
-      setTimeout(waitForCards, 500);
+  // Column detail pages and main board pages: inject filter bar + tag pills.
+  // Both use the same waitForCards polling loop to handle lazy-loaded cards (infinite scroll).
+  if (isKanbanColumnPage() || isKanbanBoard()) {
+    // Prevent multiple concurrent waitForCards polling loops
+    if (_boardInitPending) {
+      log('Board/column init already pending, skipping duplicate init');
+      return;
     }
-  };
+    _boardInitPending = true;
 
-  waitForCards();
+    let retryCount = 0;
+    const waitForCards = () => {
+      const cards = document.querySelectorAll(CARD_WRAP_SELECTOR);
+      log(`waitForCards attempt #${retryCount + 1}: found ${cards.length} card wraps`);
+      if (cards.length > 0) {
+        _boardInitPending = false;
+        injectFilterBar();
+        startNewCardObserver();
+      } else {
+        retryCount++;
+        if (retryCount > 20) {
+          _boardInitPending = false;
+          log('Gave up waiting for cards after 20 attempts (10s)');
+          return;
+        }
+        setTimeout(waitForCards, 500);
+      }
+    };
+
+    waitForCards();
+    return;
+  }
 }
 
 // ──────────────────────────────────────────────
