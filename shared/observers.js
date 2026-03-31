@@ -8,7 +8,7 @@ import { renderTagPills } from './ui/pills.js';
 import { renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { isActivelyFiltering } from './filters/counts.js';
-import { applyFilters, refreshTagDropdown } from './filters/filterBar.js';
+import { applyFilters } from './filters/filterBar.js';
 
 // ──────────────────────────────────────────────
 // MutationObserver for card DOM changes (drag & drop, new cards, etc.)
@@ -42,12 +42,6 @@ export function startCardObserver() {
     debounce = setTimeout(() => {
       log('cardObserver: new cards detected, re-rendering pills and re-applying filters');
       renderTagPills();
-      // Refresh tag dropdown if all lazy frames are done loading
-      const lazyFrames = document.querySelectorAll('turbo-frame[loading="lazy"]');
-      if (lazyFrames.length === 0) {
-        log('cardObserver: no lazy frames remaining, refreshing tag dropdown');
-        refreshTagDropdown();
-      }
       if (isActivelyFiltering()) applyFilters();
     }, 50);
   });
