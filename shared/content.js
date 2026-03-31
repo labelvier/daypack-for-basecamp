@@ -4,7 +4,7 @@
  * Content script that adds assignee/author/tag filter dropdowns to Basecamp card tables.
  * Also renders tag pills on card detail pages, and adds a tag editor UI in edit mode.
  *
- * Works on: Basecamp card_tables board pages + card detail pages + card edit pages
+ * Works on: Basecamp card_tables board pages + individual column pages + card detail pages + card edit pages
  *
  * This file is the esbuild entry point. All feature logic lives in the modules under shared/.
  * esbuild bundles everything into a single IIFE output for Chrome and Safari.
@@ -18,7 +18,7 @@ import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage, is
 import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
-import { observeTitleH1 } from './observers.js';
+import { observeTitleH1, startCardObserver, startLazyFrameObserver, destroyLazyFrameObserver } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 import { initHeyMenuObserver, destroyHeyMenuObserver, processReadingsPage } from './ui/heyMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
@@ -70,10 +70,23 @@ function init() {
     return;
   }
 
-  // Column detail pages: render tag pills in card titles (same as board)
+  // Column detail pages: render tag pills only — no filter bar.
+  // Uses lazyFrameObserver (triggers card loading) and cardObserver (re-renders pills per batch).
   if (isKanbanColumnPage()) {
-    renderTagPills();
-    startNewCardObserver();
+    startLazyFrameObserver();
+    let retryCount = 0;
+    const waitForColumnCards = () => {
+      const cards = document.querySelectorAll(CARD_WRAP_SELECTOR);
+      log(`waitForColumnCards attempt #${retryCount + 1}: found ${cards.length} card wraps`);
+      if (cards.length > 0) {
+        renderTagPills();
+        startCardObserver();
+      } else {
+        retryCount++;
+        if (retryCount < 20) setTimeout(waitForColumnCards, 500);
+      }
+    };
+    waitForColumnCards();
     return;
   }
 
@@ -89,19 +102,27 @@ function init() {
   }
   _boardInitPending = true;
 
+  // Force-load all lazy turbo-frames so all cards are available for tag scanning
+  startLazyFrameObserver();
+
   let retryCount = 0;
   const waitForCards = () => {
     const cards = document.querySelectorAll(CARD_WRAP_SELECTOR);
-    log(`waitForCards attempt #${retryCount + 1}: found ${cards.length} card wraps`);
-    if (cards.length > 0) {
+    const lazyFrames = document.querySelectorAll('turbo-frame[loading="lazy"]');
+    log(`waitForCards attempt #${retryCount + 1}: found ${cards.length} card wraps, ${lazyFrames.length} lazy frames remaining`);
+    if (cards.length > 0 && lazyFrames.length === 0) {
       _boardInitPending = false;
+      destroyLazyFrameObserver();
       injectFilterBar();
       startNewCardObserver();
     } else {
       retryCount++;
-      if (retryCount > 20) {
+      if (retryCount > 40) {
         _boardInitPending = false;
-        log('Gave up waiting for cards after 20 attempts (10s)');
+        destroyLazyFrameObserver();
+        log('Gave up waiting for all lazy frames after 40 attempts (20s), injecting with partial cards');
+        injectFilterBar();
+        startNewCardObserver();
         return;
       }
       setTimeout(waitForCards, 500);
@@ -133,6 +154,7 @@ document.addEventListener('turbo:load', () => {
   destroyJumpMenuObserver();
   destroyHeyMenuObserver();
   destroyNewCardObserver();
+  destroyLazyFrameObserver();
   initJumpMenuObserver();
   initHeyMenuObserver();
   init();
@@ -145,6 +167,7 @@ document.addEventListener('turbo:render', () => {
   destroyJumpMenuObserver();
   destroyHeyMenuObserver();
   destroyNewCardObserver();
+  destroyLazyFrameObserver();
   initJumpMenuObserver();
   initHeyMenuObserver();
   init();

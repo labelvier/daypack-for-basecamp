@@ -9,7 +9,7 @@ import { tagDisplayLabel } from '../utils/tags.js';
 import { scanPersons, scanTags, getCardTags, getCardAssigneeIds, getCardAuthorName, isUnassigned, isInCollapsedColumn } from '../data/scan.js';
 import { persistTagsToSession, readFiltersFromHash, readFiltersFromStorage, writeFiltersToHash } from '../data/persistence.js';
 import { renderTagPills } from '../ui/pills.js';
-import { createCustomDropdown } from '../ui/dropdown.js';
+import { createCustomDropdown, buildMenuItems } from '../ui/dropdown.js';
 import { isActivelyFiltering, updateColumnCounts, updateShadowcards } from './counts.js';
 import { startCardObserver } from '../observers.js';
 
@@ -117,6 +117,58 @@ export function injectFilterBar() {
 
   // --- Watch for DOM changes (drag & drop, new cards) and re-apply filters ---
   startCardObserver();
+}
+
+/**
+ * Re-scan tags from the DOM and rebuild the tag dropdown menu items.
+ * Called after new cards are lazy-loaded so the dropdown stays complete.
+ */
+export function refreshTagDropdown() {
+  const tagDropdown = document.getElementById('bkf-tag');
+  if (!tagDropdown) return;
+
+  const tags = scanTags();
+  log('refreshTagDropdown: re-scanned tags:', tags.size);
+
+  persistTagsToSession(tags);
+
+  const currentValue = tagDropdown.dataset.value || '__all__';
+
+  const tagOptions = [
+    { value: '__all__', label: 'All tags' },
+    ...Array.from(tags.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([t]) => ({ value: t, label: tagDisplayLabel(t), tagColor: tagColor(t) })),
+  ];
+
+  const menu = tagDropdown.querySelector('.bkf-dropdown__menu');
+  if (!menu) return;
+  menu.innerHTML = '';
+  buildMenuItems(tagDropdown, menu, tagOptions);
+
+  const stillExists = tagOptions.some((o) => o.value === currentValue);
+  const restoreOption = stillExists ? tagOptions.find((o) => o.value === currentValue) : tagOptions[0];
+
+  tagDropdown.dataset.value = restoreOption.value;
+  const selectedEl = tagDropdown.querySelector('.bkf-dropdown__selected');
+  if (selectedEl) {
+    selectedEl.innerHTML = '';
+    if (restoreOption.tagColor) {
+      const pill = document.createElement('span');
+      pill.className = 'bkf-tag-pill';
+      pill.style.backgroundColor = restoreOption.tagColor.bg;
+      pill.style.color = restoreOption.tagColor.fg;
+      pill.textContent = restoreOption.label;
+      selectedEl.appendChild(pill);
+    } else {
+      const text = document.createElement('span');
+      text.textContent = restoreOption.label;
+      selectedEl.appendChild(text);
+    }
+  }
+  tagDropdown.querySelectorAll('.bkf-dropdown__item').forEach((item) => {
+    item.classList.toggle('bkf-dropdown__item--active', item.dataset.value === restoreOption.value);
+  });
 }
 
 /**
