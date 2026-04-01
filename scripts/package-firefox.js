@@ -5,7 +5,7 @@
  * Usage:
  *   npm run package:firefox
  *
- * Output: build/firefox/backpack-by-label-vier-v{version}.zip
+ * Output: build/firefox/daypack-by-label-vier-v{version}.zip
  */
 
 import fs from 'fs';
@@ -20,7 +20,7 @@ const root = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'firefox', 'manifest.json'), 'utf8'));
 const version = manifest.version;
 const outDir = path.join(root, 'build', 'firefox');
-const outFile = path.join(outDir, `backpack-by-label-vier-v${version}.zip`);
+const outFile = path.join(outDir, `daypack-by-label-vier-v${version}.zip`);
 
 // First run a production build
 console.log('Running production build…');

@@ -1,6 +1,6 @@
 //
 //  SafariWebExtensionHandler.swift
-//  Backpack by Label Vier Extension
+//  Daypack by Label Vier Extension
 //
 //  Created by Eric Mulder on 11/02/2026.
 //

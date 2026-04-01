@@ -9,8 +9,8 @@ chrome/shared/content.js
 chrome/shared/content.css
 firefox/shared/content.js
 firefox/shared/content.css
-safari/Backpack by Label Vier/Backpack by Label Vier Extension/Resources/content.js
-safari/Backpack by Label Vier/Backpack by Label Vier Extension/Resources/content.css
+safari/Daypack by Label Vier/Daypack by Label Vier Extension/Resources/content.js
+safari/Daypack by Label Vier/Daypack by Label Vier Extension/Resources/content.css
 
 # Distribution packages
 build/*

@@ -1,10 +1,10 @@
 # All Your Basecamp Tools, Always at Hand
 
-Backpack by Label Vier supercharges your Basecamp workflow by adding powerful filtering capabilities to your kanban boards. Stay focused, organized, and in control of your projects.
+Daypack by Label Vier supercharges your Basecamp workflow by adding powerful filtering capabilities to your kanban boards. Stay focused, organized, and in control of your projects.
 
 ## 🎯 What It Does
 
-Backpack adds smart filtering options directly to your Basecamp card tables (kanban boards), allowing you to:
+Daypack adds smart filtering options directly to your Basecamp card tables (kanban boards), allowing you to:
 
 - **Filter by Assignee**: Instantly view only the cards assigned to specific team members
 - **Filter by Author**: See who created which cards and track contributions
@@ -23,7 +23,7 @@ Backpack adds smart filtering options directly to your Basecamp card tables (kan
 
 ## 🚀 How It Works
 
-1. Install Backpack
+1. Install Daypack
 2. Navigate to any Basecamp kanban board (card table)
 3. Use the filter dropdowns that appear automatically
 4. Select assignees or authors to filter your view
@@ -31,7 +31,7 @@ Backpack adds smart filtering options directly to your Basecamp card tables (kan
 
 ## 🔒 Privacy First
 
-Backpack runs entirely in your browser. We don't collect, store, or transmit any of your Basecamp data. Your project information stays private and secure.
+Daypack runs entirely in your browser. We don't collect, store, or transmit any of your Basecamp data. Your project information stays private and secure.
 
 ## 👥 Perfect For
 

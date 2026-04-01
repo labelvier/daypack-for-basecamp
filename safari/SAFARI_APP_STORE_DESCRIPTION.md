@@ -1,8 +1,8 @@
-# Backpack by Label Vier - Safari Extension
+# Daypack by Label Vier - Safari Extension
 
 ## App Store Description
 
-All your Basecamp tools, always at hand in your backpack. Backpack by Label Vier supercharges your Basecamp workflow by adding powerful filtering capabilities to your kanban boards. Stay focused, organized, and in control of your projects.
+All your Basecamp tools, always at hand in your daypack. Daypack by Label Vier supercharges your Basecamp workflow by adding powerful filtering capabilities to your kanban boards. Stay focused, organized, and in control of your projects.
 
 ## What's New in This Version
 
@@ -10,7 +10,7 @@ Initial release with smart filtering for Basecamp card tables.
 
 ## Description
 
-Backpack adds smart filtering options directly to your Basecamp card tables (kanban boards), helping you stay focused and productive.
+Daypack adds smart filtering options directly to your Basecamp card tables (kanban boards), helping you stay focused and productive.
 
 ### Key Features
 
@@ -19,7 +19,7 @@ Backpack adds smart filtering options directly to your Basecamp card tables (kan
 • Multi-Filter Support - Combine filters to get exactly the view you need
 • One-Click Clearing - Reset filters instantly to see the full board again
 
-### Why Backpack?
+### Why Daypack?
 
 Save Time: Stop scrolling through endless cards looking for specific tasks. Find what you need in seconds.
 
@@ -31,7 +31,7 @@ Seamless Integration: Works directly within Basecamp's interface. No need to lea
 
 ### Privacy & Security
 
-Backpack runs entirely in your browser. We don't collect, store, or transmit any of your Basecamp data. Your project information stays private and secure.
+Daypack runs entirely in your browser. We don't collect, store, or transmit any of your Basecamp data. Your project information stays private and secure.
 
 ### Requirements
 
@@ -55,11 +55,11 @@ https://labelvier.com
 
 ## Marketing URL
 
-https://labelvier.com/backpack
+https://labelvier.com/daypack
 
 ## Privacy Policy URL
 
-https://labelvier.com/backpack/privacy
+https://labelvier.com/daypack/privacy
 
 ## Category
 

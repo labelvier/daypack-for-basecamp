@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Backpack by Label Vier are documented here.
+All notable changes to Daypack by Label Vier are documented here.
 
 ## [Unreleased]
 

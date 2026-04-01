@@ -7,7 +7,7 @@
  *   npm run dev
  *
  * After a change is detected, reload the extension in Chrome:
- *   chrome://extensions → click the reload (↺) button on Backpack by Label Vier
+ *   chrome://extensions → click the reload (↺) button on Daypack by Label Vier
  */
 
 import chokidar from 'chokidar';
