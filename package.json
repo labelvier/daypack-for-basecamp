@@ -1,7 +1,7 @@
 {
-  "name": "backpack-by-label-vier",
+  "name": "daypack-by-label-vier",
   "version": "1.0.1",
-  "description": "Backpack by Label Vier — Basecamp kanban filter extension for Chrome, Firefox and Safari",
+  "description": "Daypack by Label Vier — Basecamp kanban filter extension for Chrome, Firefox and Safari",
   "license": "MIT",
   "private": true,
   "type": "module",

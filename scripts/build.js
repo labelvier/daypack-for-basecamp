@@ -21,7 +21,7 @@ const isDev = process.argv.includes('--dev');
 const TARGETS = [
   path.join(root, 'chrome', 'shared'),
   path.join(root, 'firefox', 'shared'),
-  path.join(root, 'safari', 'Backpack by Label Vier', 'Backpack by Label Vier Extension', 'Resources'),
+  path.join(root, 'safari', 'Daypack by Label Vier', 'Daypack by Label Vier Extension', 'Resources'),
 ];
 
 const SRC_JS  = path.join(root, 'shared', 'content.js');

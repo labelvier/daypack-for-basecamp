@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Backpack by Label Vier
+//  Daypack by Label Vier
 //
 //  Created by Eric Mulder on 11/02/2026.
 //

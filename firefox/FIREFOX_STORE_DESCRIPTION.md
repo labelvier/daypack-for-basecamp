@@ -1,12 +1,12 @@
 # Firefox Add-ons (AMO) Store Description
 
-**Name:** Backpack by Label Vier
+**Name:** Daypack by Label Vier
 
 **Summary (max 250 chars):**
-All your Basecamp tools, always at hand in your backpack. Filter kanban boards by assignee, author, and tags. Add, edit, and organize tags directly on cards. Stay organized effortlessly.
+All your Basecamp tools, always at hand in your daypack. Filter kanban boards by assignee, author, and tags. Add, edit, and organize tags directly on cards. Stay organized effortlessly.
 
 **Description:**
-Backpack by Label Vier brings powerful filtering and organization tools to your Basecamp 4 card tables (kanban boards).
+Daypack by Label Vier brings powerful filtering and organization tools to your Basecamp 4 card tables (kanban boards).
 
 **Features:**
 

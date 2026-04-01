@@ -22,7 +22,7 @@ npm run package:chrome
 
 This will:
 1. Run a production build
-2. Create `build/chrome/backpack-by-label-vier-v{version}.zip`
+  2. Create `build/chrome/daypack-by-label-vier-v{version}.zip`
 3. Upload to Chrome Web Store
 
 ## Firefox Builds
@@ -35,14 +35,14 @@ npm run package:firefox
 
 This will:
 1. Run a production build
-2. Create `build/firefox/backpack-by-label-vier-v{version}.zip`
+  2. Create `build/firefox/daypack-by-label-vier-v{version}.zip`
 3. Upload to Firefox Add-ons (AMO)
 
 ## Safari Builds
 
 Safari builds are created via Xcode:
 
-1. Open `safari/Backpack by Label Vier/Backpack by Label Vier.xcodeproj`
+  1. Open `safari/Daypack by Label Vier/Daypack by Label Vier.xcodeproj`
 2. Product → Archive
 3. Archives are stored in `~/Library/Developer/Xcode/Archives/`
 4. Export to `build/safari/` for distribution

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Backpack by Label Vier
+//  Daypack by Label Vier
 //
 //  Created by Eric Mulder on 11/02/2026.
 //
@@ -9,7 +9,7 @@ import Cocoa
 import SafariServices
 import WebKit
 
-let extensionBundleIdentifier = "com.labelvier.backpack.Extension"
+let extensionBundleIdentifier = "com.labelvier.daypack.Extension"
 
 class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
