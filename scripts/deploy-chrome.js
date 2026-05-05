@@ -34,7 +34,7 @@ if (missing.length) {
 
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'chrome', 'manifest.json'), 'utf8'));
 const version = manifest.version;
-const zipPath = path.join(root, 'build', 'chrome', `daypack-by-label-vier-v${version}.zip`);
+const zipPath = path.join(root, 'build', 'chrome', `daypack-by-label-vier-chrome-v${version}.zip`);
 
 if (!fs.existsSync(zipPath)) {
   console.log('Zip not found — running package:chrome first…');

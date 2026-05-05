@@ -104,7 +104,7 @@ Minifies JS (~20 kB, down from ~52 kB) and CSS into `chrome/shared/`, `firefox/s
 npm run package:chrome
 ```
 
-Runs a production build, then zips `chrome/` → `build/chrome/daypack-by-label-vier-v{version}.zip`.
+Runs a production build, then zips `chrome/` → `build/chrome/daypack-by-label-vier-chrome-v{version}.zip`.
 Upload that file to the Chrome Web Store.
 
 ### Package Firefox Extension
@@ -113,7 +113,7 @@ Upload that file to the Chrome Web Store.
 npm run package:firefox
 ```
 
-Runs a production build, then zips `firefox/` → `build/firefox/daypack-by-label-vier-v{version}.zip`.
+Runs a production build, then zips `firefox/` → `build/firefox/daypack-by-label-vier-firefox-v{version}.zip`.
 Upload that file to Firefox Add-ons (AMO).
 
 ### Package Safari Extension

@@ -5,7 +5,7 @@
  * Usage:
  *   npm run package:chrome
  *
- * Output: build/chrome/daypack-by-label-vier-v{version}.zip
+ * Output: build/chrome/daypack-by-label-vier-chrome-v{version}.zip
  */
 
 import fs from 'fs';
@@ -20,7 +20,7 @@ const root = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'chrome', 'manifest.json'), 'utf8'));
 const version = manifest.version;
 const outDir = path.join(root, 'build', 'chrome');
-const outFile = path.join(outDir, `daypack-by-label-vier-v${version}.zip`);
+const outFile = path.join(outDir, `daypack-by-label-vier-chrome-v${version}.zip`);
 
 // First run a production build
 console.log('Running production build…');
