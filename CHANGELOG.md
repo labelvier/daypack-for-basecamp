@@ -9,7 +9,7 @@ All notable changes to Daypack by Label Vier are documented here.
 ### Added
 - **Tag pills in the Hey menu** — Kanban card reading items in the Hey (notification) menu now show tag pills extracted from `[tag]` syntax in the card title. Tags are replaced in-place, so prefixes like "Re: " and "Due today: " are preserved at the correct position.
 - **Tag pills on /my/readings page** — The same tag pill rendering applies to the full notifications page (`/my/readings`), including lazily-loaded items.
-- **Filter bar on column (tab) pages** — Filter bar is now also injected on individual column pages (single lane view), not only on the full kanban board.
+- **Tag pills on column (tab) pages** — Individual column (single lane) pages now render tag pills, with `cardObserver` re-running on infinite-scroll batches. The filter bar itself remains board-only.
 - **Safari .app build automation** — `npm run package:safari` runs `xcodebuild` Release and zips the resulting `.app` to `build/safari/`. The release workflow runs this on a `macos-latest` runner and attaches the zip to the GitHub release.
 - **Auto-deploy pipeline** — `npm run deploy:chrome` and `npm run deploy:firefox` upload + publish via `chrome-webstore-upload-cli` and `web-ext sign`. GitHub Actions release workflow auto-deploys to both stores on `release: published` and attaches separate Chrome / Firefox / Safari zips to the release.
 
