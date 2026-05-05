@@ -33,6 +33,9 @@ if (!issuer || !secret) {
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'firefox', 'manifest.json'), 'utf8'));
 const version = manifest.version;
 
+// Fail fast if CHANGELOG is missing an entry for this version
+execSync('node scripts/check-changelog.js', { cwd: root, stdio: 'inherit' });
+
 // Ensure latest production build is in firefox/shared/
 console.log('Running production build…');
 execSync('node scripts/build.js', { cwd: root, stdio: 'inherit' });

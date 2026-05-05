@@ -171,10 +171,13 @@ When creating a release (minor or major), follow these steps:
    ```
    Use the CHANGELOG entry for that version as the release notes.
 6. The `Release` workflow (`.github/workflows/release.yml`) auto-runs:
+   - **`validate` job** runs first and fails the entire release if `CHANGELOG.md` has no populated entry for the release tag (via `npm run check:changelog`). All deploy jobs declare `needs: validate`, so a missing changelog blocks the upload.
    - Builds Chrome + Firefox + Safari zips and attaches them to the GitHub release
    - Uploads + publishes to Chrome Web Store (via `chrome-webstore-upload`)
    - Signs + uploads to Firefox AMO (via `web-ext sign`)
    - Safari `.app` (built on a `macos-latest` runner) is only attached to the GitHub release; App Store submission still requires Xcode → Archive locally
+
+The local `deploy:chrome` and `deploy:firefox` scripts run the same changelog check before uploading anything.
 
 ### Required GitHub repo secrets
 

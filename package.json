@@ -11,6 +11,7 @@
     "package:chrome": "node scripts/package-chrome.js",
     "package:firefox": "node scripts/package-firefox.js",
     "package:safari": "node scripts/package-safari.js",
+    "check:changelog": "node scripts/check-changelog.js",
     "deploy:chrome": "node scripts/deploy-chrome.js",
     "deploy:firefox": "node scripts/deploy-firefox.js",
     "deploy": "npm run deploy:chrome && npm run deploy:firefox"

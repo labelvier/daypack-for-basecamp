@@ -34,6 +34,10 @@ if (missing.length) {
 
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'chrome', 'manifest.json'), 'utf8'));
 const version = manifest.version;
+
+// Fail fast if CHANGELOG is missing an entry for this version
+execSync('node scripts/check-changelog.js', { cwd: root, stdio: 'inherit' });
+
 const zipPath = path.join(root, 'build', 'chrome', `daypack-by-label-vier-chrome-v${version}.zip`);
 
 if (!fs.existsSync(zipPath)) {

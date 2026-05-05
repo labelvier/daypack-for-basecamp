@@ -8,8 +8,27 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
+  validate:
+    name: Validate release (CHANGELOG matches tag)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Verify CHANGELOG entry for release tag
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}
+        run: node scripts/check-changelog.js
+
   chrome:
     name: Build, upload & deploy Chrome extension
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -52,6 +71,7 @@ jobs:
 
   firefox:
     name: Build & deploy Firefox extension
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -92,6 +112,7 @@ jobs:
 
   safari:
     name: Build Safari .app and attach to release
+    needs: validate
     runs-on: macos-latest
     permissions:
       contents: write
