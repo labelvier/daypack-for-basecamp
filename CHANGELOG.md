@@ -9,11 +9,18 @@ All notable changes to Daypack by Label Vier are documented here.
 ### Added
 - **Tag pills in the Hey menu** — Kanban card reading items in the Hey (notification) menu now show tag pills extracted from `[tag]` syntax in the card title. Tags are replaced in-place, so prefixes like "Re: " and "Due today: " are preserved at the correct position.
 - **Tag pills on /my/readings page** — The same tag pill rendering applies to the full notifications page (`/my/readings`), including lazily-loaded items.
+- **Filter bar on column (tab) pages** — Filter bar is now also injected on individual column pages (single lane view), not only on the full kanban board.
+- **Safari .app build automation** — `npm run package:safari` runs `xcodebuild` Release and zips the resulting `.app` to `build/safari/`. The release workflow runs this on a `macos-latest` runner and attaches the zip to the GitHub release.
+- **Auto-deploy pipeline** — `npm run deploy:chrome` and `npm run deploy:firefox` upload + publish via `chrome-webstore-upload-cli` and `web-ext sign`. GitHub Actions release workflow auto-deploys to both stores on `release: published` and attaches separate Chrome / Firefox / Safari zips to the release.
 
 ### Changed
-- **Auto-deploy pipeline** — `npm run deploy:chrome` and `npm run deploy:firefox` upload + publish via `chrome-webstore-upload-cli` and `web-ext sign`. GitHub Actions release workflow auto-deploys to both stores on `release: published`.
-- **Reverted Firefox gecko ID** to `backpack@labelvier.nl` so the existing AMO addon receives updates seamlessly (display name remains "Daypack by Label Vier").
+- **Renamed extension from Backpack to Daypack** — Display name, store descriptions, Xcode project, manifests and build paths all renamed. The Firefox `gecko.id` stays `backpack@labelvier.nl` so existing AMO installs receive updates seamlessly.
 - **Safari version sync** — Bumped `MARKETING_VERSION` and the Safari extension manifest version to `1.0.2` in line with Chrome and Firefox.
+- **Removed Turbo Streams `characterData` workaround** — `cardObserver` now only listens for new card nodes, simplifying the observer and reducing redundant work.
+
+### Fixed
+- **Tag pills not rendering on tabs with many cards** — Lazy-loaded card frames are now resolved before the filter bar is injected, so tag pills render reliably even on large boards.
+- **Tag pills missing during infinite scroll on column pages** — `cardObserver` is now started on column pages so newly fetched cards get their pills rendered as the user scrolls.
 
 ## [1.0.1] — 2026-03-24
 
