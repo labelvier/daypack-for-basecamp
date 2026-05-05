@@ -118,10 +118,13 @@ Upload that file to Firefox Add-ons (AMO).
 
 ### Package Safari Extension
 
-1. Open `safari/Daypack by Label Vier/Daypack by Label Vier.xcodeproj` in Xcode
-2. Run `npm run build` first to ensure the latest files are in Resources/
-3. Product → Archive in Xcode
-4. Export `.app` to `build/safari/` for App Store submission
+```bash
+npm run package:safari
+```
+
+Runs a production build, then `xcodebuild -configuration Release` and zips the resulting `.app` → `build/safari/daypack-by-label-vier-safari-v{version}.zip`. macOS + Xcode required.
+
+The `.app` is signed with whatever signing identity Xcode picks (typically Development). Suitable for distribution outside the App Store and for the GitHub release attachment. **For App Store submission**, open the project in Xcode → Product → Archive → Distribute → App Store Connect.
 
 ## File Synchronization Strategy
 
@@ -168,9 +171,10 @@ When creating a release (minor or major), follow these steps:
    ```
    Use the CHANGELOG entry for that version as the release notes.
 6. The `Release` workflow (`.github/workflows/release.yml`) auto-runs:
-   - Builds Chrome + Firefox zips and attaches them to the GitHub release
+   - Builds Chrome + Firefox + Safari zips and attaches them to the GitHub release
    - Uploads + publishes to Chrome Web Store (via `chrome-webstore-upload`)
    - Signs + uploads to Firefox AMO (via `web-ext sign`)
+   - Safari `.app` (built on a `macos-latest` runner) is only attached to the GitHub release; App Store submission still requires Xcode → Archive locally
 
 ### Required GitHub repo secrets
 
