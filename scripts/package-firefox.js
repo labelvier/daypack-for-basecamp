@@ -35,7 +35,7 @@ try { fs.unlinkSync(outFile); } catch {}
 // Zip firefox/ directory
 console.log(`Packaging firefox/ → ${path.relative(root, outFile)}`);
 execSync(
-  `zip -r "${outFile}" . -x "*.DS_Store" -x "__MACOSX/*" -x "*.map"`,
+  `zip -r "${outFile}" . -x "*.DS_Store" -x "__MACOSX/*" -x "*.map" -x ".amo-upload-uuid"`,
   { cwd: path.join(root, 'firefox'), stdio: 'inherit' }
 );
 
