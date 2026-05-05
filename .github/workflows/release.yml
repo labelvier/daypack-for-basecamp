@@ -5,8 +5,8 @@ on:
     types: [published]
 
 jobs:
-  build-chrome:
-    name: Build & upload Chrome extension
+  chrome:
+    name: Build, upload & deploy Chrome extension
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -38,3 +38,51 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.find-zip.outputs.path }}
+
+      - name: Deploy to Chrome Web Store
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+        run: npm run deploy:chrome
+
+  firefox:
+    name: Build & deploy Firefox extension
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package Firefox extension
+        run: npm run package:firefox
+
+      - name: Find zip file
+        id: find-zip
+        run: |
+          ZIP=$(ls build/firefox/*.zip | head -n 1)
+          echo "path=$ZIP" >> "$GITHUB_OUTPUT"
+          echo "name=$(basename $ZIP)" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Firefox zip to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.find-zip.outputs.path }}
+
+      - name: Deploy to Firefox Add-ons (AMO)
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: npm run deploy:firefox

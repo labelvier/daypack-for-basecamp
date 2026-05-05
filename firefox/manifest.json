@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Daypack by Label Vier",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "All your Basecamp tools, always at hand in your daypack. Filter kanban boards, manage tasks, and stay organized.",
   "content_scripts": [
     {
@@ -19,7 +19,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "daypack@labelvier.nl",
+      "id": "backpack@labelvier.nl",
       "strict_min_version": "109.0",
       "data_collection_permissions": {
         "required": ["none"]

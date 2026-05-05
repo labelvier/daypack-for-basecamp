@@ -1,0 +1,11 @@
+{
+  "categories": {
+    "firefox": ["other"]
+  },
+  "summary": {
+    "en-US": "Filter Basecamp 4 kanban boards by assignee, author, or tag with visual tag pills."
+  },
+  "version": {
+    "license": "MIT"
+  }
+}

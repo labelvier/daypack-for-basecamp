@@ -4,9 +4,16 @@ All notable changes to Daypack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [1.0.2] — 2026-05-05
+
 ### Added
 - **Tag pills in the Hey menu** — Kanban card reading items in the Hey (notification) menu now show tag pills extracted from `[tag]` syntax in the card title. Tags are replaced in-place, so prefixes like "Re: " and "Due today: " are preserved at the correct position.
 - **Tag pills on /my/readings page** — The same tag pill rendering applies to the full notifications page (`/my/readings`), including lazily-loaded items.
+
+### Changed
+- **Auto-deploy pipeline** — `npm run deploy:chrome` and `npm run deploy:firefox` upload + publish via `chrome-webstore-upload-cli` and `web-ext sign`. GitHub Actions release workflow auto-deploys to both stores on `release: published`.
+- **Reverted Firefox gecko ID** to `backpack@labelvier.nl` so the existing AMO addon receives updates seamlessly (display name remains "Daypack by Label Vier").
+- **Safari version sync** — Bumped `MARKETING_VERSION` and the Safari extension manifest version to `1.0.2` in line with Chrome and Firefox.
 
 ## [1.0.1] — 2026-03-24
 

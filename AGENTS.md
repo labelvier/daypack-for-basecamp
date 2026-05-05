@@ -167,6 +167,39 @@ When creating a release (minor or major), follow these steps:
    gh release create vx.y.z --title "vx.y.z" --notes "..." --latest
    ```
    Use the CHANGELOG entry for that version as the release notes.
+6. The `Release` workflow (`.github/workflows/release.yml`) auto-runs:
+   - Builds Chrome + Firefox zips and attaches them to the GitHub release
+   - Uploads + publishes to Chrome Web Store (via `chrome-webstore-upload`)
+   - Signs + uploads to Firefox AMO (via `web-ext sign`)
+
+### Required GitHub repo secrets
+
+For auto-deploy to work, set these secrets in **Settings → Secrets and variables → Actions**:
+
+| Secret | Where to get it |
+|---|---|
+| `CHROME_EXTENSION_ID` | Chrome Web Store Dev Console → extension page (URL contains the ID) |
+| `CHROME_CLIENT_ID` | Google Cloud Console → OAuth 2.0 client ID for Chrome Web Store API |
+| `CHROME_CLIENT_SECRET` | Same OAuth client |
+| `CHROME_REFRESH_TOKEN` | Generated once via OAuth flow ([guide](https://github.com/fregante/chrome-webstore-upload-keys)) |
+| `AMO_JWT_ISSUER` | https://addons.mozilla.org/developers/addon/api/key/ |
+| `AMO_JWT_SECRET` | Same page |
+
+### Manual deploy from local machine
+
+```bash
+# Chrome
+CHROME_EXTENSION_ID=... CHROME_CLIENT_ID=... CHROME_CLIENT_SECRET=... CHROME_REFRESH_TOKEN=... \
+  npm run deploy:chrome
+
+# Firefox
+AMO_JWT_ISSUER=... AMO_JWT_SECRET=... npm run deploy:firefox
+
+# Both
+npm run deploy
+```
+
+Optional flags via env: `CHROME_SKIP_PUBLISH=1` (draft only), `CHROME_TRUSTED_TESTERS=1`, `AMO_CHANNEL=unlisted`.
 
 ## Code Style Guidelines
 

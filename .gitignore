@@ -1,3 +1,14 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# web-ext sign upload tracking
+firefox/.amo-upload-uuid
+
+# Safari pre-rename leftover (Backpack → Daypack, commit b41047d)
+safari/Backpack by Label Vier/
+
 # macOS
 .DS_Store
 
@@ -34,3 +45,6 @@ kanban_snapshot.txt
 # Xcode
 *.xcuserstate
 xcuserdata/
+
+# Claude
+.claude
