@@ -161,21 +161,19 @@ When you make changes, ask if you need to update the [CHANGELOG.md](./CHANGELOG.
 
 When creating a release (minor or major), follow these steps:
 
-1. Bump the version in `package.json`, `chrome/manifest.json` and `firefox/manifest.json`
+1. Bump the version in `package.json`, `chrome/manifest.json`, `firefox/manifest.json`, and the Safari `project.pbxproj` (`MARKETING_VERSION`)
 2. Update `CHANGELOG.md` — move items from `[Unreleased]` into a new dated section
 3. Commit all changes with message: `chore: bump version to x.y.z`
-4. Push to `main`
-5. Create a GitHub release using the `gh` CLI:
+4. Push to `main`, then push a plain semver tag (no `v` prefix):
    ```bash
-   gh release create vx.y.z --title "vx.y.z" --notes "..." --latest
+   git tag 2.1.0
+   git push origin 2.1.0
    ```
-   Use the CHANGELOG entry for that version as the release notes.
-6. The `Release` workflow (`.github/workflows/release.yml`) auto-runs:
-   - **`validate` job** runs first and fails the entire release if `CHANGELOG.md` has no populated entry for the release tag (via `npm run check:changelog`). All deploy jobs declare `needs: validate`, so a missing changelog blocks the upload.
-   - Builds Chrome + Firefox + Safari zips and attaches them to the GitHub release
-   - Uploads + publishes to Chrome Web Store (via `chrome-webstore-upload`)
-   - Signs + uploads to Firefox AMO (via `web-ext sign`)
-   - Safari `.app` (built on a `macos-latest` runner) is only attached to the GitHub release; App Store submission still requires Xcode → Archive locally
+5. The `Release` workflow (`.github/workflows/release.yml`) fires automatically on the tag push:
+   - **`create-release` job** validates `CHANGELOG.md`, extracts the section body as release notes, and creates the GitHub release
+   - **`chrome` job** builds the Chrome zip, attaches it to the release, and deploys to the Chrome Web Store
+   - **`firefox` job** builds the Firefox zip, attaches it, and signs + uploads to Firefox AMO
+   - **`safari` job** (runs on `macos-latest`) builds the Safari `.app` zip and attaches it to the release; App Store submission still requires Xcode → Archive locally
 
 The local `deploy:chrome` and `deploy:firefox` scripts run the same changelog check before uploading anything.
 

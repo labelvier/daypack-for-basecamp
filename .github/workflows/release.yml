@@ -1,16 +1,21 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - '[0-9]*'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
-  validate:
-    name: Validate release (CHANGELOG matches tag)
+  create-release:
+    name: Create GitHub release from CHANGELOG
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Checkout
@@ -21,14 +26,38 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Verify CHANGELOG entry for release tag
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate CHANGELOG entry
         env:
-          RELEASE_VERSION: ${{ github.event.release.tag_name }}
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
         run: node scripts/check-changelog.js
+
+      - name: Extract changelog notes
+        id: notes
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          NOTES=$(node scripts/extract-changelog.js "$RELEASE_VERSION")
+          {
+            echo "notes<<CHANGELOG_EOF"
+            echo "$NOTES"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: v${{ steps.version.outputs.version }}
+          body: ${{ steps.notes.outputs.notes }}
+          draft: false
+          prerelease: false
 
   chrome:
     name: Build, upload & deploy Chrome extension
-    needs: validate
+    needs: create-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -71,7 +100,7 @@ jobs:
 
   firefox:
     name: Build & deploy Firefox extension
-    needs: validate
+    needs: create-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -112,7 +141,7 @@ jobs:
 
   safari:
     name: Build Safari .app and attach to release
-    needs: validate
+    needs: create-release
     runs-on: macos-latest
     permissions:
       contents: write

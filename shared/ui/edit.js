@@ -80,7 +80,7 @@ export function injectEditUI() {
   // --- Hint text ---
   const hint = document.createElement('p');
   hint.className = 'bkf-edit-hint';
-  hint.innerHTML = 'Tip: schrijf <code>[Tag]</code> vooraan de titel om een tag toe te voegen.';
+  hint.innerHTML = 'Tip: add <code>[Tag]</code> to the card title to create a tag.';
   ui.appendChild(hint);
 
   // Inject UI just before the title input's container

@@ -8,8 +8,9 @@
  * Output: build/safari/daypack-by-label-vier-safari-v{version}.zip
  *
  * Note: requires Xcode + xcodebuild in PATH (macOS only).
- * Resulting .app is signed with whatever signing identity Xcode picks
- * (typically Development). For App Store submission use Xcode → Archive.
+ * The .app is signed with whatever signing identity Xcode picks (typically
+ * the Development certificate in your keychain). For App Store submission
+ * use Xcode → Archive.
  */
 
 import fs from 'fs';
