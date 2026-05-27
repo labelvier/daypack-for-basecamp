@@ -116,10 +116,11 @@ export function observeTitleH1() {
     titleObserver = null;
   }
 
-  const titleH1 = document.querySelector('h1.card-perma__title');
+  // BC5 renamed class to perma-header__title; support both.
+  const titleH1 = document.querySelector('h1.perma-header__title, h1.card-perma__title');
   if (!titleH1) return;
 
-  log('Detail page: attaching MutationObserver to h1.card-perma__title');
+  log('Detail page: attaching MutationObserver to title h1');
 
   let wasEditMode = !!titleH1.querySelector('textarea');
 
