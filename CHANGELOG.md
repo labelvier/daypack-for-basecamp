@@ -4,6 +4,12 @@ All notable changes to Daypack by Label Vier are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- **Safari code signing restored** — Removed `CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO` flags from the `xcodebuild` invocation in `package-safari.js` so the `.app` is properly signed and can be launched on macOS.
+
+### Added
+- **`deploy:safari` script** — `npm run deploy:safari` builds the Safari package (running `package:safari` if the zip is missing) and uploads the zip to the matching GitHub release using the `gh` CLI.
+
 ## [2.0.0] — 2026-05-27
 
 Full Basecamp 5 compatibility release. All tag pill features updated for BC5's restructured DOM, plus tag pills in new locations (search results, project timeline, activity feed) and support for `app.basecamp.com`.
