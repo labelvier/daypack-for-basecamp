@@ -11,6 +11,7 @@ All notable changes to Daypack by Label Vier are documented here.
 - **Tag pills in project timeline and activity feed** — Kanban card links in the project activity feed on project overview pages and on the `/activity` page (Latest Activity) now show tag pills.
 
 ### Changed
+- **app.basecamp.com support** — Extension now runs on both `https://3.basecamp.com/*` and `https://app.basecamp.com/*`. All features work on both URLs without any changes to the extension logic.
 - **Basecamp 5 compatibility** — Full BC5 support across all features:
   - **Detail page title** — Updated selector to `h1.perma-header__title` (BC5 renamed `card-perma__title`); both classes supported so BC4 continues to work.
   - **Archived card detail pages** — Tag pills now render on archived cards, which have no edit link and use a plain `<div>` as title container instead of an `<a>` element.
