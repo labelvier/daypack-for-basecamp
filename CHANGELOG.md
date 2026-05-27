@@ -8,7 +8,7 @@ All notable changes to Daypack by Label Vier are documented here.
 
 ### Added
 - **Tag pills on search results page** — Kanban card results on the `/search` page now show tag pills. A MutationObserver handles infinite-scroll pagination so newly loaded results are processed automatically.
-- **Tag pills in project timeline** — Kanban card links in the project activity feed (`project-timeline-snapshot`) on project overview pages now show tag pills.
+- **Tag pills in project timeline and activity feed** — Kanban card links in the project activity feed on project overview pages and on the `/activity` page (Latest Activity) now show tag pills.
 
 ### Changed
 - **Basecamp 5 compatibility** — Full BC5 support across all features:
