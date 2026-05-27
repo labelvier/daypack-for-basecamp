@@ -43,3 +43,10 @@ export function isReadingsPage() {
   log('isReadingsPage?', result, '| pathname:', path);
   return result;
 }
+
+export function isSearchPage() {
+  const path = window.location.pathname;
+  const result = /\/search$/.test(path);
+  log('isSearchPage?', result, '| pathname:', path);
+  return result;
+}

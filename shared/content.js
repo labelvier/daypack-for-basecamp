@@ -14,7 +14,7 @@
 
 import { log } from './logger.js';
 import { CARD_WRAP_SELECTOR, EDIT_UI_ID } from './constants.js';
-import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage, isReadingsPage } from './utils/page.js';
+import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage, isReadingsPage, isSearchPage } from './utils/page.js';
 import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
@@ -22,6 +22,7 @@ import { observeTitleH1, startCardObserver, startLazyFrameObserver, destroyLazyF
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 import { initHeyMenuObserver, destroyHeyMenuObserver, processReadingsPage } from './ui/heyMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
+import { processSearchResultsPage } from './ui/searchResults.js';
 
 // ──────────────────────────────────────────────
 // Init
@@ -67,6 +68,12 @@ function init() {
   // Readings page (/my/readings): render tag pills in kanban card reading items
   if (isReadingsPage()) {
     processReadingsPage();
+    return;
+  }
+
+  // Search results page (/search): render tag pills in kanban card results
+  if (isSearchPage()) {
+    processSearchResultsPage();
     return;
   }
 
