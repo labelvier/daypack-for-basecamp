@@ -14,7 +14,8 @@ import { createTagPill } from './pills.js';
 // Selectors
 // ──────────────────────────────────────────────
 
-const HEY_MENU_ID = 'navigation_readings';
+// BC4: navigation_readings | BC5: sidebar_frame (turbo-frame wrapping the sidebar panel)
+const HEY_MENU_IDS = ['navigation_readings', 'sidebar_frame'];
 const CARD_LINK_PATTERN = /\/card_tables\/cards\/\d+/;
 
 // ──────────────────────────────────────────────
@@ -167,44 +168,52 @@ let _heyMenuObserver = null;
 export function initHeyMenuObserver() {
   if (_heyMenuObserver) return;
 
-  // Process any readings already in the DOM
-  const existing = document.getElementById(HEY_MENU_ID);
-  if (existing) {
-    log('Hey menu: found existing container, processing');
-    processReadingArticles(existing);
-  }
+  // Process any readings already in DOM (covers BC5 sidebar always present on load)
+  HEY_MENU_IDS.forEach((id) => {
+    const existing = document.getElementById(id);
+    if (existing) {
+      log('Hey menu: found existing container #' + id + ', processing');
+      processReadingArticles(existing);
+    }
+  });
+  // BC5: sidebar may already have articles outside the known IDs
+  const sidebarEl = document.querySelector('aside.sidebar');
+  if (sidebarEl) processReadingArticles(sidebarEl);
 
   _heyMenuObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
-        // The Hey menu container itself was added
-        if (node.id === HEY_MENU_ID) {
-          log('Hey menu: container added to DOM');
+        // Known container added (BC4 navigation_readings or BC5 sidebar_frame)
+        if (HEY_MENU_IDS.includes(node.id)) {
+          log('Hey menu: container #' + node.id + ' added to DOM');
           processReadingArticles(node);
           continue;
         }
 
-        // A container was found inside added node
-        const containerEl = node.querySelector?.(`#${HEY_MENU_ID}`);
-        if (containerEl) {
-          log('Hey menu: container found inside added node');
-          processReadingArticles(containerEl);
-          continue;
+        // A known container found inside added node
+        let matched = false;
+        for (const id of HEY_MENU_IDS) {
+          const containerEl = node.querySelector?.(`#${id}`);
+          if (containerEl) {
+            log('Hey menu: container #' + id + ' found inside added node');
+            processReadingArticles(containerEl);
+            matched = true;
+            break;
+          }
         }
+        if (matched) continue;
 
-        // A new article.reading was added (e.g. dynamic load)
+        // A new article.reading was added (BC4 or BC5 dynamic load)
         if (node.tagName === 'ARTICLE' && node.classList.contains('reading')) {
-          const container = node.closest(`#${HEY_MENU_ID}`);
-          if (container) processHeyMenuItem(node);
+          processHeyMenuItem(node);
           continue;
         }
 
-        // Check if added node is inside the Hey menu container
-        const parent = node.closest?.(`#${HEY_MENU_ID}`);
-        if (parent) {
-          node.querySelectorAll?.('article.reading').forEach(processHeyMenuItem);
+        // Batch of articles inside any sidebar/reading container
+        if (node.querySelectorAll) {
+          node.querySelectorAll('article.reading').forEach(processHeyMenuItem);
         }
       }
     }
