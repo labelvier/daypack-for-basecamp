@@ -4,6 +4,20 @@ All notable changes to Daypack by Label Vier are documented here.
 
 ## [Unreleased]
 
+## [2.0.0] — 2026-05-27
+
+### Added
+- **Tag pills on search results page** — Kanban card results on the `/search` page now show tag pills. A MutationObserver handles infinite-scroll pagination so newly loaded results are processed automatically.
+
+### Changed
+- **Basecamp 5 compatibility** — Full BC5 support across all features:
+  - **Detail page title** — Updated selector to `h1.perma-header__title` (BC5 renamed `card-perma__title`); both classes supported so BC4 continues to work.
+  - **Archived card detail pages** — Tag pills now render on archived cards, which have no edit link and use a plain `<div>` as title container instead of an `<a>` element.
+  - **Hey menu** — Extended to `#sidebar_frame` and `aside.sidebar` (BC5 replaced `#navigation_readings`). Observer now processes `article.reading` nodes anywhere in the tree.
+  - **Filter bar** — Injects into BC5's native `nav.filter[aria-label="Card filters"]` flex row as a static sibling. Falls back to the BC4 `.perma__header` chain.
+  - **Jump menu (Cmd+J)** — Rewritten for BC5's `#my-navigation-menu-listbox` / `li.nav-menu__result` / `span[data-content-filter-target="ariaText"]` structure. BC4 support dropped.
+- **Tag pill colors** — Palette replaced with tints of BC5's own color-picker hues (yellow / orange / red / pink / purple / blue / green / sand) at 88% lightness. All colors verified WCAG AA (≥4.5:1 with dark text). Contrast picker now compares against actual `#3d4f5f` luminance instead of pure black.
+
 ## [1.0.2] — 2026-05-05
 
 ### Added
