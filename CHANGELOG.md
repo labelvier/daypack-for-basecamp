@@ -6,6 +6,8 @@ All notable changes to Daypack by Label Vier are documented here.
 
 ## [2.0.0] — 2026-05-27
 
+Full Basecamp 5 compatibility release. All tag pill features updated for BC5's restructured DOM, plus tag pills in new locations (search results, project timeline, activity feed) and support for `app.basecamp.com`.
+
 ### Added
 - **Tag pills on search results page** — Kanban card results on the `/search` page now show tag pills. A MutationObserver handles infinite-scroll pagination so newly loaded results are processed automatically.
 - **Tag pills in project timeline and activity feed** — Kanban card links in the project activity feed on project overview pages and on the `/activity` page (Latest Activity) now show tag pills.
