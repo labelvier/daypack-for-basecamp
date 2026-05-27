@@ -1,9 +1,9 @@
 /**
- * Project timeline tag pill rendering.
+ * Activity feed tag pill rendering.
  *
- * Injects tag pills into kanban card links in the project timeline snapshot
- * (homepage and project overview pages). Watches for dynamically rendered
- * or replaced timeline sections via MutationObserver.
+ * Injects tag pills into kanban card links in:
+ * - Project timeline snapshots (project overview pages)
+ * - Latest Activity feed (/activity)
  */
 
 import { log } from '../logger.js';
@@ -17,13 +17,7 @@ const CARD_LINK_RE = /\/card_tables\/cards\//;
 // ──────────────────────────────────────────────
 
 /**
- * Process a single timeline item link.
- *
- * DOM:
- *   <div class="project-timeline-snapshot__content">
- *     Eric M. commented on
- *     <a class="decorated" href="…/card_tables/cards/…">[Tag] Card title</a>
- *   </div>
+ * Process a single card link — works for both timeline and activity feed.
  */
 function processTimelineLink(linkEl) {
   if (!CARD_LINK_RE.test(linkEl.getAttribute('href') || '')) return;
@@ -51,10 +45,20 @@ function processTimelineLink(linkEl) {
 }
 
 /**
- * Process all card links inside a timeline container.
+ * Process all card links inside a container element.
  */
-function processTimeline(containerEl) {
+function processContainer(containerEl) {
   containerEl.querySelectorAll('a.decorated').forEach(processTimelineLink);
+}
+
+/**
+ * Scan the full document for all known activity containers.
+ */
+function processAll() {
+  // Project overview timeline snapshots
+  document.querySelectorAll('section.project-timeline-snapshot').forEach(processContainer);
+  // /activity page day lists
+  document.querySelectorAll('div.today-events-list').forEach(processContainer);
 }
 
 // ──────────────────────────────────────────────
@@ -64,31 +68,41 @@ function processTimeline(containerEl) {
 let _timelineObserver = null;
 
 /**
- * Start watching for project timeline snapshots anywhere in the document.
- * Runs on every page so the homepage and project overview pages are covered.
- * Safe to call multiple times — only one observer is ever active.
+ * Start watching for timeline and activity feed containers.
+ * Runs on every page. Safe to call multiple times.
  */
 export function initProjectTimelineObserver() {
   if (_timelineObserver) return;
 
-  // Process any timelines already in the DOM
-  document.querySelectorAll('section.project-timeline-snapshot').forEach(processTimeline);
+  processAll();
 
   _timelineObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
 
+        // Project timeline snapshot added
         if (node.classList?.contains('project-timeline-snapshot')) {
-          processTimeline(node);
+          processContainer(node);
           continue;
         }
-        node.querySelectorAll?.('section.project-timeline-snapshot').forEach(processTimeline);
 
-        // Single link added inside an existing timeline
-        if (node.classList?.contains('project-timeline-snapshot__item')) {
-          node.querySelectorAll?.('a.decorated').forEach(processTimelineLink);
+        // Activity feed day list added
+        if (node.classList?.contains('today-events-list')) {
+          processContainer(node);
+          continue;
         }
+
+        // Individual activity item added (infinite scroll / live update)
+        if (node.classList?.contains('today-events-list__item') ||
+            node.classList?.contains('project-timeline-snapshot__item')) {
+          node.querySelectorAll?.('a.decorated').forEach(processTimelineLink);
+          continue;
+        }
+
+        // Container found inside added node
+        node.querySelectorAll?.('section.project-timeline-snapshot, div.today-events-list')
+          .forEach(processContainer);
       }
     }
   });
