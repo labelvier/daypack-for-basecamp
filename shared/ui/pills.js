@@ -98,9 +98,10 @@ export function renderTagPills() {
  * Always re-renders on each call (handles Turbo navigation back from edit).
  */
 export function renderDetailPageTags() {
-  const titleH1 = document.querySelector('h1.card-perma__title');
+  // BC5 renamed class to perma-header__title; support both.
+  const titleH1 = document.querySelector('h1.perma-header__title, h1.card-perma__title');
   if (!titleH1) {
-    log('Detail page: no h1.card-perma__title found');
+    log('Detail page: no h1.perma-header__title / h1.card-perma__title found');
     return;
   }
 
@@ -111,20 +112,23 @@ export function renderDetailPageTags() {
   }
 
   const titleLink = titleH1.querySelector('a[href*="/edit?focus=kanban_card_title"]');
-  if (!titleLink) {
-    log('Detail page: no edit link found in title');
+
+  // Archived cards have no edit link — title is a plain <div> child instead.
+  const titleContainer = titleLink || titleH1.querySelector('div');
+  if (!titleContainer) {
+    log('Detail page: no title container found');
     return;
   }
 
-  // Reconstruct the raw text from the current link content.
-  // If pills are already present we convert them back to [Tag] form.
-  const rawText = getRawTitleFromLink(titleLink);
+  // Reconstruct the raw text from the current content.
+  // getRawTitleFromLink works on any element — converts pill spans back to [Tag] form.
+  const rawText = getRawTitleFromLink(titleContainer);
   log('Detail page: raw title text:', rawText);
 
   const tags = extractTags(rawText);
 
-  // Reset the link to plain raw text, then re-render
-  titleLink.textContent = rawText;
+  // Reset the container to plain raw text, then re-render
+  titleContainer.textContent = rawText;
 
   if (tags.length === 0) {
     titleH1.dataset.bkfTags = 'none';
@@ -137,15 +141,15 @@ export function renderDetailPageTags() {
   // Build new content: pills first, then remaining text
   const remainingText = rawText.replace(TAG_REGEX, '').trim();
 
-  titleLink.textContent = '';
+  titleContainer.textContent = '';
 
   tags.forEach((tag) => {
-    titleLink.appendChild(createTagPill(tag));
-    titleLink.appendChild(document.createTextNode(' '));
+    titleContainer.appendChild(createTagPill(tag));
+    titleContainer.appendChild(document.createTextNode(' '));
   });
 
   if (remainingText) {
-    titleLink.appendChild(document.createTextNode(remainingText));
+    titleContainer.appendChild(document.createTextNode(remainingText));
   }
 
   log('Detail page: rendered', tags.length, 'tag pill(s)');
