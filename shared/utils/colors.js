@@ -1,5 +1,6 @@
 /**
- * Tag color generation — deterministic, WCAG-safe pastel palette.
+ * Tag color generation — deterministic, WCAG-safe palette.
+ * Colors sourced from BC5's named color vocabulary.
  */
 
 import { normalizeTag } from './tags.js';
@@ -47,28 +48,16 @@ export function contrastRatio(l1, l2) {
  * Returns { bg: 'rgb(r,g,b)', fg: '#...' }
  */
 export function tagColor(tag) {
-  // Curated pastel palette — soft, warm/cool mix, Basecamp-style
+  // BC5 color-picker hues at 88% lightness — all verified WCAG AA (≥4.5:1, dark text)
   const PALETTE = [
-    [199, 228, 246], // soft blue
-    [254, 215, 170], // peach
-    [195, 232, 206], // mint
-    [246, 198, 198], // rose
-    [220, 208, 243], // lavender
-    [254, 240, 179], // butter yellow
-    [181, 228, 228], // teal
-    [248, 206, 228], // pink
-    [214, 229, 189], // sage
-    [230, 214, 200], // warm sand
-    [197, 220, 243], // periwinkle
-    [252, 222, 200], // apricot
-    [210, 235, 219], // seafoam
-    [241, 206, 219], // blush
-    [224, 220, 240], // soft violet
-    [240, 234, 195], // wheat
-    [195, 234, 234], // aqua
-    [239, 213, 238], // orchid
-    [226, 236, 204], // lime cream
-    [219, 213, 230], // mauve
+    [254, 241, 194], // yellow
+    [255, 230, 194], // orange
+    [254, 207, 194], // red
+    [249, 199, 230], // pink
+    [216, 197, 252], // purple
+    [194, 225, 255], // blue
+    [212, 237, 219], // green
+    [231, 225, 218], // sand
   ];
 
   const normalized = normalizeTag(tag);
@@ -76,10 +65,11 @@ export function tagColor(tag) {
   const [r, g, b] = PALETTE[hash % PALETTE.length];
   const lum = luminance(r, g, b);
 
-  // Pick dark or white text based on WCAG contrast
+  // Compare against actual text colors (not pure black) for accurate WCAG pick
+  const L_DARK = 0.0741; // luminance of #3d4f5f
+  const crDark = contrastRatio(lum, L_DARK);
   const crWhite = contrastRatio(1, lum);
-  const crBlack = contrastRatio(lum, 0);
-  const fg = crWhite >= crBlack ? '#fff' : '#3d4f5f';
+  const fg = crDark >= crWhite ? '#3d4f5f' : '#fff';
 
   return { bg: `rgb(${r},${g},${b})`, fg };
 }
