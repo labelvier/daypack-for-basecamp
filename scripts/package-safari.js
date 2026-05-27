@@ -8,8 +8,9 @@
  * Output: build/safari/daypack-by-label-vier-safari-v{version}.zip
  *
  * Note: requires Xcode + xcodebuild in PATH (macOS only).
- * Resulting .app is signed with whatever signing identity Xcode picks
- * (typically Development). For App Store submission use Xcode → Archive.
+ * The .app is signed with whatever signing identity Xcode picks (typically
+ * the Development certificate in your keychain). For App Store submission
+ * use Xcode → Archive.
  */
 
 import fs from 'fs';
@@ -39,7 +40,7 @@ execSync('node scripts/build.js', { cwd: root, stdio: 'inherit' });
 // Build Safari .app via xcodebuild
 console.log('Building Safari .app via xcodebuild (Release)…');
 execSync(
-  `xcodebuild -project "${safariProject}" -scheme "Daypack by Label Vier" -configuration Release -derivedDataPath "${derivedDir}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO clean build`,
+  `xcodebuild -project "${safariProject}" -scheme "Daypack by Label Vier" -configuration Release -derivedDataPath "${derivedDir}" clean build`,
   { cwd: root, stdio: 'inherit' }
 );
 
