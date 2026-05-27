@@ -26,22 +26,22 @@ export function injectFilterBar() {
     return;
   }
 
-  let headerArea = document.querySelector('.perma__header');
-  log('Looking for .perma__header:', headerArea ? 'FOUND' : 'NOT FOUND');
+  // BC5: inject into the native filter nav so dropdowns flow as flex siblings.
+  const nativeFilterNav = document.querySelector('nav.filter[aria-label="Card filters"]');
+  log('Looking for nav.filter[aria-label="Card filters"] (BC5):', nativeFilterNav ? 'FOUND' : 'NOT FOUND');
+
+  // BC4 / fallback chain
+  let headerArea = nativeFilterNav
+    || document.querySelector('.perma__header')
+    || document.querySelector('header.perma-header')
+    || document.querySelector('.panel--kanban-board')
+    || document.querySelector('.kanban-triage');
 
   if (!headerArea) {
-    headerArea = document.querySelector('.panel--kanban-board');
-    log('Fallback .panel--kanban-board:', headerArea ? 'FOUND' : 'NOT FOUND');
+    warn('No suitable header element found! Giving up.');
+    return;
   }
-
-  if (!headerArea) {
-    headerArea = document.querySelector('.kanban-triage');
-    log('Last resort .kanban-triage:', headerArea ? 'FOUND' : 'NOT FOUND');
-    if (!headerArea) {
-      warn('No suitable header element found! Giving up.');
-      return;
-    }
-  }
+  log('Filter bar injection target:', headerArea.tagName, (headerArea.id || headerArea.className).toString().substring(0, 40));
 
   // Render tag pills in card titles before scanning
   renderTagPills();
@@ -95,9 +95,14 @@ export function injectFilterBar() {
   bar.appendChild(authorDropdown);
   bar.appendChild(tagDropdown);
 
-  const headerStyle = window.getComputedStyle(headerArea);
-  if (headerStyle.position === 'static') {
-    headerArea.style.position = 'relative';
+  // When injecting into BC5's own flex nav, use static flow instead of absolute overlay.
+  if (nativeFilterNav) {
+    bar.classList.add('bkf-filter-bar--inline');
+  } else {
+    const headerStyle = window.getComputedStyle(headerArea);
+    if (headerStyle.position === 'static') {
+      headerArea.style.position = 'relative';
+    }
   }
 
   headerArea.appendChild(bar);
