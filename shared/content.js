@@ -23,6 +23,7 @@ import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js'
 import { initHeyMenuObserver, destroyHeyMenuObserver, processReadingsPage } from './ui/heyMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
 import { processSearchResultsPage } from './ui/searchResults.js';
+import { initProjectTimelineObserver, destroyProjectTimelineObserver } from './ui/projectTimeline.js';
 
 // ──────────────────────────────────────────────
 // Init
@@ -37,6 +38,10 @@ initJumpMenuObserver();
 // Start the Hey menu observer immediately — it runs on every page so that
 // tag pills appear in Hey (notification) menu reading items for kanban cards.
 initHeyMenuObserver();
+
+// Start the project timeline observer immediately — renders tag pills in
+// timeline activity items on the homepage and project overview pages.
+initProjectTimelineObserver();
 
 // Guard against multiple concurrent waitForCards loops (e.g. DOMContentLoaded + turbo:load)
 let _boardInitPending = false;
@@ -160,10 +165,12 @@ document.addEventListener('turbo:load', () => {
   // Re-init jump menu observer in case body was replaced by turbo:render
   destroyJumpMenuObserver();
   destroyHeyMenuObserver();
+  destroyProjectTimelineObserver();
   destroyNewCardObserver();
   destroyLazyFrameObserver();
   initJumpMenuObserver();
   initHeyMenuObserver();
+  initProjectTimelineObserver();
   init();
 });
 
@@ -173,10 +180,12 @@ document.addEventListener('turbo:render', () => {
   // turbo:render replaces document.body — re-attach the observer to the new body
   destroyJumpMenuObserver();
   destroyHeyMenuObserver();
+  destroyProjectTimelineObserver();
   destroyNewCardObserver();
   destroyLazyFrameObserver();
   initJumpMenuObserver();
   initHeyMenuObserver();
+  initProjectTimelineObserver();
   init();
 });
 
