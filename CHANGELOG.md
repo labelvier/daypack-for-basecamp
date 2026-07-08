@@ -2,7 +2,14 @@
 
 All notable changes to Daypack by Label Vier are documented here.
 
-## [Unreleased]
+## [2.1.0] — 2026-07-08
+
+### Added
+- **Due date filter** — New "Due date" dropdown in the filter bar with From / Until date pickers to filter cards by due date range, plus a "Show all overdue" checkbox that shows only cards past due. Filter state persists in the URL hash and localStorage like the other filters.
+- **`deploy:safari` script** — `npm run deploy:safari` builds the Safari package (running `package:safari` if the zip is missing) and uploads the zip to the matching GitHub release using the `gh` CLI.
+
+### Fixed
+- **Safari code signing restored** — Removed `CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO` flags from the `xcodebuild` invocation in `package-safari.js` so the `.app` is properly signed and can be launched on macOS.
 
 ### Fixed
 - **Safari code signing restored** — Removed `CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO` flags from the `xcodebuild` invocation in `package-safari.js` so the `.app` is properly signed and can be launched on macOS.

@@ -12,13 +12,21 @@
 
 'use strict';
 
+// Guard against multiple content script instances running on the same page
+// (e.g. Chrome Web Store version + unpacked dev version both active).
+const _INIT_ATTR = 'data-bkf-active';
+if (document.documentElement.hasAttribute(_INIT_ATTR)) {
+  throw new Error('[BKF] Another instance already running — aborting duplicate.');
+}
+document.documentElement.setAttribute(_INIT_ATTR, '1');
+
 import { log } from './logger.js';
 import { CARD_WRAP_SELECTOR, EDIT_UI_ID } from './constants.js';
 import { isKanbanBoard, isKanbanColumnPage, isCardDetailPage, isCardEditPage, isReadingsPage, isSearchPage } from './utils/page.js';
 import { renderTagPills, renderDetailPageTags } from './ui/pills.js';
 import { injectEditUI } from './ui/edit.js';
 import { injectFilterBar } from './filters/filterBar.js';
-import { observeTitleH1, startCardObserver, startLazyFrameObserver, destroyLazyFrameObserver } from './observers.js';
+import { observeTitleH1, startCardObserver, startLazyFrameObserver, destroyLazyFrameObserver, initSidebarOpenObserver, destroySidebarOpenObserver } from './observers.js';
 import { initJumpMenuObserver, destroyJumpMenuObserver } from './ui/jumpMenu.js';
 import { initHeyMenuObserver, destroyHeyMenuObserver, processReadingsPage } from './ui/heyMenu.js';
 import { startNewCardObserver, destroyNewCardObserver } from './ui/newCard.js';
@@ -63,10 +71,20 @@ function init() {
     return;
   }
 
-  // Card detail pages: render tag pills + watch for inline title editing
+  // Card detail pages: render tag pills + watch for inline title editing.
+  // Retry up to 20× (300 ms apart) in case the title h1 is inside a lazy turbo-frame
+  // that hasn't landed in the DOM yet (e.g. navigation from a Hey-menu notification).
   if (isCardDetailPage()) {
-    renderDetailPageTags();
-    observeTitleH1();
+    let detailRetries = 0;
+    const tryRenderDetail = () => {
+      const ok = renderDetailPageTags();
+      observeTitleH1();
+      if (!ok && detailRetries < 20) {
+        detailRetries++;
+        setTimeout(tryRenderDetail, 300);
+      }
+    };
+    tryRenderDetail();
     return;
   }
 
@@ -148,6 +166,9 @@ function init() {
 // Bootstrap — DOMContentLoaded + Turbo events
 // ──────────────────────────────────────────────
 
+// Sidebar open observer watches <html> — never replaced by Turbo, so init once only.
+initSidebarOpenObserver();
+
 log('Document readyState:', document.readyState);
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
@@ -193,7 +214,7 @@ document.addEventListener('turbo:render', () => {
 document.addEventListener('turbo:frame-load', () => {
   log('turbo:frame-load event fired');
   if (isCardDetailPage() || isCardEditPage()) {
-    const h1 = document.querySelector('h1.card-perma__title');
+    const h1 = document.querySelector('h1.perma-header__title, h1.card-perma__title');
     const hasTextarea = h1 && !!h1.querySelector('textarea');
     if (hasTextarea) {
       // Edit form loaded inside frame — inject tag picker

@@ -16,7 +16,11 @@ export function isActivelyFiltering() {
   const a = document.getElementById('bkf-assignee')?.dataset.value;
   const b = document.getElementById('bkf-author')?.dataset.value;
   const t = document.getElementById('bkf-tag')?.dataset.value;
-  return (a && a !== '__all__') || (b && b !== '__all__') || (t && t !== '__all__');
+  const dueDateEl = document.getElementById('bkf-duedate');
+  const dueStart = dueDateEl?.dataset.start;
+  const dueEnd = dueDateEl?.dataset.end;
+  const dueOverdue = dueDateEl?.dataset.overdue === 'true';
+  return (a && a !== '__all__') || (b && b !== '__all__') || (t && t !== '__all__') || !!dueStart || !!dueEnd || dueOverdue;
 }
 
 /**
@@ -55,29 +59,46 @@ export function updateColumnCounts() {
 
 /**
  * Show or hide placeholder "shadow" cards when all cards in a column are filtered away.
+ * Only shows (0/x) — columns with cards all filtered out; not truly empty columns (0/0).
  */
 export function updateShadowcards() {
-  const containers = document.querySelectorAll('.kanban-column__cards, .kanban-triage__cards');
+  // Derive containers from actual card wraps to avoid relying on specific class names.
+  const containerMap = new Map();
 
-  containers.forEach((container) => {
-    if (container.closest(COLLAPSED_COLUMN_SELECTOR)) return;
+  document.querySelectorAll(CARD_WRAP_SELECTOR).forEach((wrap) => {
+    if (wrap.closest(COLLAPSED_COLUMN_SELECTOR)) return;
+    const container = wrap.parentElement;
+    if (!container) return;
+    if (!containerMap.has(container)) containerMap.set(container, { total: 0, visible: 0 });
+    const counts = containerMap.get(container);
+    counts.total++;
+    if (!wrap.classList.contains('bkf-hidden')) counts.visible++;
+  });
 
-    const wraps = container.querySelectorAll(CARD_WRAP_SELECTOR);
-    const visibleCount = Array.from(wraps).filter(
-      (w) => !w.classList.contains('bkf-hidden')
-    ).length;
+  // Collect containers that need shadowcard shown.
+  const showShadow = new Set();
 
+  containerMap.forEach((counts, container) => {
+    if (counts.total > 0 && counts.visible === 0) showShadow.add(container);
+  });
+
+  // Show shadowcard for filtered-empty containers.
+  showShadow.forEach((container) => {
     let shadow = container.querySelector('.kanban-card--shadowcard');
-
-    if (visibleCount === 0) {
-      if (!shadow) {
-        shadow = document.createElement('div');
-        shadow.className = 'kanban-card--shadowcard';
-        container.appendChild(shadow);
-      }
-      shadow.classList.add('bkf-shadowcard-visible');
-    } else if (shadow) {
-      shadow.classList.remove('bkf-shadowcard-visible');
+    if (!shadow) {
+      shadow = document.createElement('div');
+      shadow.className = 'kanban-card--shadowcard';
+      container.appendChild(shadow);
     }
+    shadow.classList.add('bkf-shadowcard-visible');
+    container.classList.add('bkf-has-shadowcard');
+  });
+
+  // Remove shadowcard from all other containers (cleanup stale ones too).
+  document.querySelectorAll('.kanban-card--shadowcard').forEach((shadow) => {
+    const container = shadow.parentElement;
+    if (!container || showShadow.has(container)) return;
+    shadow.classList.remove('bkf-shadowcard-visible');
+    container.classList.remove('bkf-has-shadowcard');
   });
 }

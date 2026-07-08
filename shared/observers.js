@@ -160,3 +160,50 @@ export function observeTitleH1() {
 
   titleObserver.observe(titleH1, { childList: true, subtree: true });
 }
+
+// ──────────────────────────────────────────────
+// MutationObserver for sidebar open/close (data-sidebar-open on <html>)
+// ──────────────────────────────────────────────
+
+let _sidebarObserver = null;
+
+/**
+ * Watch for the "New for you" sidebar opening via the data-sidebar-open attribute
+ * on <html>. When the sidebar opens while a card detail h1 is in the DOM, re-render
+ * tag pills — the sidebar frame load may have wiped them.
+ */
+export function initSidebarOpenObserver() {
+  if (_sidebarObserver) return;
+
+  _sidebarObserver = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.attributeName !== 'data-sidebar-open') continue;
+      const isOpen = document.documentElement.hasAttribute('data-sidebar-open');
+      if (!isOpen) continue;
+      log('Sidebar opened — retrying detail page tag render');
+      // Retry up to 20× (300 ms each): the card h1 may be in a lazy frame
+      // that hasn't landed yet when data-sidebar-open is set.
+      let retries = 0;
+      const tryRender = () => {
+        const h1 = document.querySelector('h1.perma-header__title, h1.card-perma__title');
+        if (h1 && !h1.querySelector('input, textarea, form')) {
+          renderDetailPageTags();
+          return;
+        }
+        if (retries < 20) { retries++; setTimeout(tryRender, 300); }
+      };
+      tryRender();
+    }
+  });
+
+  _sidebarObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-sidebar-open'] });
+  log('Sidebar open observer started');
+}
+
+export function destroySidebarOpenObserver() {
+  if (_sidebarObserver) {
+    _sidebarObserver.disconnect();
+    _sidebarObserver = null;
+    log('Sidebar open observer stopped');
+  }
+}

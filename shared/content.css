@@ -150,9 +150,7 @@ h1.perma-header__title .bkf-tag-pill {
   border-radius: 6px;
   margin-right: 4px;
   line-height: 1.45;
-  vertical-align: baseline;
-  position: relative;
-  top: -2px;
+  vertical-align: middle;
 }
 
 /* ── Hide filtered-out card wraps (the article, not the inner div) ── */
@@ -162,6 +160,11 @@ article.kanban-card__wrap.bkf-hidden {
 
 /* ── Force shadowcard visible when all cards in a column are filtered out ── */
 .kanban-card--shadowcard.bkf-shadowcard-visible {
+  display: block !important;
+}
+
+/* ── Force cards container visible when it holds our shadowcard (e.g. on-hold) ── */
+.bkf-has-shadowcard {
   display: block !important;
 }
 
@@ -176,6 +179,97 @@ header.perma-header {
   position: static;
   right: auto;
   top: auto;
+}
+
+/* ── Due date range dropdown ── */
+.bkf-daterange__menu {
+  padding: 10px 12px;
+  min-width: 200px;
+}
+
+.bkf-daterange__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 4px 0;
+  cursor: default;
+}
+
+.bkf-daterange__label {
+  font-size: 12px;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: rgb(100, 116, 128);
+}
+
+.bkf-daterange__start,
+.bkf-daterange__end {
+  font-size: 13px;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: rgb(43, 55, 62);
+  border: 1px solid rgb(200, 206, 211);
+  border-radius: 6px;
+  padding: 3px 6px;
+}
+
+.bkf-daterange__start:disabled,
+.bkf-daterange__end:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bkf-daterange__overdue-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgb(230, 234, 237);
+  font-size: 12px;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: rgb(43, 55, 62);
+  cursor: pointer;
+}
+
+.bkf-daterange__overdue {
+  cursor: pointer;
+}
+
+.bkf-daterange__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgb(230, 234, 237);
+}
+
+.bkf-daterange__clear,
+.bkf-daterange__apply {
+  font-size: 12px;
+  font-family: -apple-system, system-ui, "system-ui", Aptos, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.bkf-daterange__clear {
+  background: none;
+  color: rgb(100, 116, 128);
+}
+
+.bkf-daterange__clear:hover {
+  background-color: rgb(237, 241, 245);
+}
+
+.bkf-daterange__apply {
+  background-color: rgb(68, 132, 196);
+  color: #fff;
+}
+
+.bkf-daterange__apply:hover {
+  background-color: rgb(56, 113, 172);
 }
 
 /* ── Card edit page: tag picker + hint ── */

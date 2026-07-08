@@ -35,6 +35,43 @@ export function getCardAuthorName(wrapEl) {
 }
 
 /**
+ * Returns a card's due date as a Date (midnight local time), or null if none/unparsable.
+ * Reads `.task-details__due-date`, e.g. "Fri, Jul 10" or "Fri, Jul 10, 2027".
+ */
+export function getCardDueDate(wrapEl) {
+  const el = wrapEl.querySelector('.task-details__due-date');
+  if (!el) return null;
+
+  const text = el.textContent.trim().replace(/^[A-Za-z]{3},\s*/, '');
+  const match = text.match(/^([A-Za-z]{3})\w*\s+(\d{1,2})(?:,\s*(\d{4}))?/);
+  if (!match) return null;
+
+  const [, month, day, year] = match;
+  const y = year ? parseInt(year, 10) : new Date().getFullYear();
+  const date = new Date(`${month} ${day}, ${y}`);
+  return isNaN(date.getTime()) ? null : date;
+}
+
+/** Returns a card's due date as 'YYYY-MM-DD', or null. */
+export function getCardDueDateISO(wrapEl) {
+  const date = getCardDueDate(wrapEl);
+  return date ? dateToISO(date) : null;
+}
+
+/** Formats a Date as local 'YYYY-MM-DD' (no UTC shift, unlike Date#toISOString). */
+export function dateToISO(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/** Returns today's local date as 'YYYY-MM-DD'. */
+export function getTodayISO() {
+  return dateToISO(new Date());
+}
+
+/**
  * Get tags from a card wrap element.
  * Reads from the data-bkf-tags cache on the title element if available.
  */

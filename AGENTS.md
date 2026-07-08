@@ -4,7 +4,9 @@
 
 ## Project Overview
 
-Browser extension (Chrome, Firefox + Safari) that adds filtering capabilities to Basecamp 4 card tables (kanban boards). The extension runs as a content script on Basecamp pages, adding assignee, author, and tag filters with visual tag pills.
+Browser extension (Chrome, Firefox + Safari) that adds filtering capabilities to Basecamp 5 card tables (kanban boards). The extension runs as a content script on Basecamp pages, adding assignee, author, and tag filters with visual tag pills.
+
+> **BC3 & BC4 support (`3.basecamp.com`) has been dropped.** Target is Basecamp 5 on `app.basecamp.com` only. Do not add compatibility shims or fallback selectors for BC3/BC4 DOM structures.
 
 ## Project Structure
 
@@ -212,7 +214,7 @@ Optional flags via env: `CHROME_SKIP_PUBLISH=1` (draft only), `CHROME_TRUSTED_TE
 - **Vanilla JavaScript** (ES6+) — no frameworks, no TypeScript
 - **Strict mode**: All code runs in an IIFE with `'use strict'`
 - **Browser APIs only**: DOM APIs, MutationObserver, localStorage, sessionStorage
-- **Basecamp integration**: Targets Basecamp 4's DOM structure and Turbo events
+- **Basecamp integration**: Targets Basecamp 5 DOM structure and Turbo events (runs on both `3.basecamp.com` and `app.basecamp.com`)
 
 ### Code Organization
 - **Section headers**: Use ASCII art separators for major sections within a file:
@@ -265,7 +267,7 @@ Optional flags via env: `CHROME_SKIP_PUBLISH=1` (draft only), `CHROME_TRUSTED_TE
 1. Edit any file under `shared/` (entry point, modules, or CSS)
 2. The watcher (`npm run dev`) rebuilds automatically
 3. Reload the extension in Chrome (`chrome://extensions` → ↺)
-4. Navigate to a Basecamp card table: `https://3.basecamp.com/*/buckets/*/card_tables/*`
+4. Navigate to a Basecamp card table: `https://3.basecamp.com/*/buckets/*/card_tables/*` or `https://app.basecamp.com/*/buckets/*/card_tables/*`
 5. Check browser console for `[BKF]` log messages
 
 ### Test Scenarios
@@ -302,7 +304,7 @@ document.head.appendChild(s);
 - **Chrome**: Manifest v3, tested on Chrome 120+
 - **Firefox**: Manifest v3, tested on Firefox 109+
 - **Safari**: Safari Web Extension, tested on Safari 17+
-- **Target**: Basecamp 4 only (`https://3.basecamp.com`)
+- **Target**: Basecamp 5 (`https://3.basecamp.com` and `https://app.basecamp.com`)
 
 ## Key Constraints
 
