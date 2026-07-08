@@ -102,7 +102,7 @@ export function renderDetailPageTags() {
   const titleH1 = document.querySelector('h1.perma-header__title, h1.card-perma__title');
   if (!titleH1) {
     log('Detail page: no h1.perma-header__title / h1.card-perma__title found');
-    return;
+    return false;
   }
 
   // Skip if in edit mode (form or input present in the area)
@@ -133,7 +133,7 @@ export function renderDetailPageTags() {
   if (tags.length === 0) {
     titleH1.dataset.bkfTags = 'none';
     log('Detail page: no tags found in title');
-    return;
+    return true;
   }
 
   titleH1.dataset.bkfTags = tags.join(',');
@@ -153,4 +153,5 @@ export function renderDetailPageTags() {
   }
 
   log('Detail page: rendered', tags.length, 'tag pill(s)');
+  return true;
 }

@@ -42,6 +42,9 @@ async function build() {
     sourcemap: isDev ? 'inline' : false,
     write: false,         // Capture output in memory
     logLevel: 'info',
+    define: {
+      __DEV__: isDev ? 'true' : 'false',
+    },
   });
 
   const jsOutput = jsResult.outputFiles[0].text;
