@@ -16,7 +16,11 @@ export function isActivelyFiltering() {
   const a = document.getElementById('bkf-assignee')?.dataset.value;
   const b = document.getElementById('bkf-author')?.dataset.value;
   const t = document.getElementById('bkf-tag')?.dataset.value;
-  return (a && a !== '__all__') || (b && b !== '__all__') || (t && t !== '__all__');
+  const dueDateEl = document.getElementById('bkf-duedate');
+  const dueStart = dueDateEl?.dataset.start;
+  const dueEnd = dueDateEl?.dataset.end;
+  const dueOverdue = dueDateEl?.dataset.overdue === 'true';
+  return (a && a !== '__all__') || (b && b !== '__all__') || (t && t !== '__all__') || !!dueStart || !!dueEnd || dueOverdue;
 }
 
 /**

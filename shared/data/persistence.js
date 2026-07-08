@@ -30,6 +30,9 @@ export function readFiltersFromHash() {
   if (params.has('assignee')) filters.assignee = params.get('assignee');
   if (params.has('author')) filters.author = params.get('author');
   if (params.has('tag')) filters.tag = params.get('tag');
+  if (params.has('dueStart')) filters.dueStart = params.get('dueStart');
+  if (params.has('dueEnd')) filters.dueEnd = params.get('dueEnd');
+  if (params.has('dueOverdue')) filters.dueOverdue = true;
   return filters;
 }
 
@@ -52,11 +55,18 @@ export function writeFiltersToHash() {
   const assigneeVal = document.getElementById('bkf-assignee')?.dataset.value;
   const authorVal = document.getElementById('bkf-author')?.dataset.value;
   const tagVal = document.getElementById('bkf-tag')?.dataset.value;
+  const dueDateEl = document.getElementById('bkf-duedate');
+  const dueStartVal = dueDateEl?.dataset.start;
+  const dueEndVal = dueDateEl?.dataset.end;
+  const dueOverdueVal = dueDateEl?.dataset.overdue === 'true';
 
   const params = new URLSearchParams();
   if (assigneeVal && assigneeVal !== '__all__') params.set('assignee', assigneeVal);
   if (authorVal && authorVal !== '__all__') params.set('author', authorVal);
   if (tagVal && tagVal !== '__all__') params.set('tag', tagVal);
+  if (dueOverdueVal) params.set('dueOverdue', '1');
+  if (dueStartVal) params.set('dueStart', dueStartVal);
+  if (dueEndVal) params.set('dueEnd', dueEndVal);
 
   const hashStr = params.toString();
   const newHash = hashStr ? '#' + hashStr : '';
@@ -71,6 +81,9 @@ export function writeFiltersToHash() {
     if (assigneeVal && assigneeVal !== '__all__') filters.assignee = assigneeVal;
     if (authorVal && authorVal !== '__all__') filters.author = authorVal;
     if (tagVal && tagVal !== '__all__') filters.tag = tagVal;
+    if (dueOverdueVal) filters.dueOverdue = true;
+    if (dueStartVal) filters.dueStart = dueStartVal;
+    if (dueEndVal) filters.dueEnd = dueEndVal;
 
     if (Object.keys(filters).length > 0) {
       localStorage.setItem(getBoardFilterKey(), JSON.stringify(filters));
